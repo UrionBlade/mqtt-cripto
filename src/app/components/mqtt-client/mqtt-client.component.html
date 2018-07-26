@@ -1,0 +1,82 @@
+<mat-card class="card">
+  <mat-card-title>
+    Mqtt Client
+  </mat-card-title>
+  <mat-card-content *ngFor="let profile of profiles">
+    <form [formGroup]="configurationForm">
+      <mat-form-field>
+        <input matInput placeholder="Broker Address" [(ngModel)]="broker.brokerAddress" formControlName="mqttBrokerAddress"/>
+        <mat-hint>Insert Broker Address</mat-hint> 
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Broker Port" [(ngModel)]="broker.brokerPort" formControlName="mqttBrokerPort"/>
+        <mat-hint>Insert Broker Port</mat-hint> 
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Client ID" [(ngModel)]="broker.clientId" formControlName="mqttClientID"/>
+        <mat-hint>Insert Client Id</mat-hint> 
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Broker User" [(ngModel)]="broker.brokerUser" formControlName="mqttBrokerUser"/>
+        <mat-hint>Insert Broker User</mat-hint> 
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Broker Password" [(ngModel)]="broker.brokerPassword" formControlName="mqttBrokerPassword"/>
+        <mat-hint>Insert Broker Password</mat-hint> 
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Broker Protocol" [(ngModel)]="broker.protocol" formControlName="mqttBrokerProtocol"/>
+        <mat-hint>Insert Broker Protocol</mat-hint> 
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="QoS" [(ngModel)]="broker.qos" formControlName="mqttQos"/>
+        <mat-hint>Insert QoS type</mat-hint> 
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="saveBrokerConfig()">Save</button>
+    <button mat-raised-button color="primary" (click)="connectBroker()">Connect</button>
+    <button mat-raised-button color="warn" (click)="disconnectBroker()">Disconnect</button>
+    <button mat-raised-button color="warn" (click)="deleteBrokerConfig()">Delete</button>
+  </mat-card-actions>
+</mat-card>
+<mat-card class="second-card">
+  <mat-card-title>
+    Topic
+  </mat-card-title>
+  <mat-card-content>
+    <span>
+      <form [formGroup]="topicForm">
+        <mat-form-field>
+          <input matInput placeholder="Topic" [(ngModel)]="subscribeTo.topics[0]" formControlName="topicSubscribed"/>
+          <mat-hint>Insert Topic to subscribe</mat-hint> 
+        </mat-form-field>
+      </form>
+    </span> 
+    <span>
+      
+    </span>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="saveTopic()">Save</button>
+      <button mat-raised-button color="primary" (click)="subscribeTopic()" (click)="drawer.open()">Subscribe</button>
+      <button mat-raised-button color="primary" (click)="clearBuffer()">Clear</button>
+      <button mat-raised-button color="warn" (click)="unsubscribeTopic()" (click)="drawer.close()">Unsubscribe</button>
+      <button mat-raised-button color="warn" (click)="deleteTopic()">Delete</button>
+      <mat-drawer-container class="example-container">
+        <mat-drawer class="drawer" #drawer>
+          <mat-list>
+            <mat-list-item  *ngFor="let message of messages">
+              {{ message }}
+            </mat-list-item>
+          </mat-list>
+        </mat-drawer>
+        <mat-drawer-content>
+          
+        </mat-drawer-content>
+      </mat-drawer-container>
+
+    </mat-card-actions>
+  </mat-card-content>
+  
+</mat-card>
