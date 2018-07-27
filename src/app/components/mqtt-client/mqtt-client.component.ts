@@ -14,7 +14,7 @@ const topicFile = 'topics.json';
 let client;
 
 @Component({
-  selector: 'cripto-mqtt-client',
+  selector: 'app-mqtt-client',
   templateUrl: './mqtt-client.component.html',
   styleUrls: ['./mqtt-client.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -26,7 +26,6 @@ export class MqttClientComponent implements OnInit {
   topicForm: FormGroup;
 
   broker: BrokerConfiguration = new BrokerConfiguration('', 1883, 'mqtt', 'Mqtt Client ID', '', '', '1');
-  profiles: Array<BrokerConfiguration> = new Array();
   subscribeTo: Topic = new Topic(Array());
   messages: Array<Messages> = new Array(new Messages('', ''));
   protocol = protocols;
@@ -34,15 +33,19 @@ export class MqttClientComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder, private cd: ChangeDetectorRef) { }
 
+  // ======================================================================= //
+  //                Save broker configuration into JSON file.                //
+  // ======================================================================= //
+
   saveBrokerConfig() {
     console.log(this.broker);
     storage.remove(dataPath + mqttConfig).then( err => {
         if (err) {
           console.error(err);
         } else {
-          storage.set(dataPath + mqttConfig, this.broker, ( err ) => {
-            if (err) {
-              console.error(err);
+          storage.set(dataPath + mqttConfig, this.broker, ( error ) => {
+            if (error) {
+              console.error(error);
             } else {
               console.log('File mqttConfig.json created into ', dataPath);
             }
@@ -50,6 +53,10 @@ export class MqttClientComponent implements OnInit {
         }
       });
   }
+
+  // ======================================================================= //
+  //          Delete JSON file that contains broker configuration.           //
+  // ======================================================================= //
 
   deleteBrokerConfig() {
     storage.isPathExists(dataPath + mqttConfig)
@@ -69,6 +76,10 @@ export class MqttClientComponent implements OnInit {
         }
       });
   }
+
+  // ======================================================================= //
+  //               Connect to the broker using selected protocol             //
+  // ======================================================================= //
 
   connectBroker() {
     client = connectClient(
@@ -91,9 +102,9 @@ export class MqttClientComponent implements OnInit {
         if (err) {
           console.error(err);
         } else {
-          storage.set(dataPath + topicFile, this.subscribeTo, (err) => {
-            if (err) {
-              console.error(err);
+          storage.set(dataPath + topicFile, this.subscribeTo, (error) => {
+            if (error) {
+              console.error(error);
             } else {
               console.log('File topics.json created into ', dataPath);
             }
@@ -170,7 +181,6 @@ export class MqttClientComponent implements OnInit {
               this.broker.brokerUser      = data.brokerUser;
               this.broker.qos             = data.qos;
               this.broker.protocol        = data.protocol;
-              this.profiles = [...this.profiles, this.broker];
               this.cd.detectChanges();
             })
             .catch(err => {

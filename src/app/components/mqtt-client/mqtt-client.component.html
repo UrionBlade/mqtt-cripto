@@ -2,7 +2,7 @@
   <mat-card-title>
     Mqtt Client
   </mat-card-title>
-  <mat-card-content *ngFor="let profile of profiles">
+  <mat-card-content>
     <form [formGroup]="configurationForm">
       <mat-form-field class="form-field">
         <input matInput placeholder="Broker Address" [(ngModel)]="broker.brokerAddress" formControlName="mqttBrokerAddress"/>

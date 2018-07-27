@@ -149,11 +149,11 @@
   "defaultProject": "angular-electron",
   "schematics": {
     "@schematics/angular:component": {
-      "prefix": "cripto",
+      "prefix": "app",
       "styleext": "scss"
     },
     "@schematics/angular:directive": {
-      "prefix": "cripto"
+      "prefix": "app"
     }
   }
 }
