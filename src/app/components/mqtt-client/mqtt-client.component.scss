@@ -1,5 +1,5 @@
 .divider {
-    margin-top:15px;
+    margin-top:200px;
     margin-bottom:15px;
     margin:0 auto;
     display: block;
@@ -10,9 +10,14 @@
 
 .card {
     margin-top:90px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .second-card {
+    
+    margin-left: 10px;
+    margin-right: 10px;
     margin-top: 30px;
 }
 
@@ -25,4 +30,15 @@
 
 .drawer {
     width: 100%;
+}
+
+.form-field {
+    margin: 3px;
+}
+
+.topic {
+    margin-top: 30px;
+    width: 98%;
+    margin-left: 1%;
+    margin-right: 1%;
 }

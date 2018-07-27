@@ -4,32 +4,46 @@
   </mat-card-title>
   <mat-card-content *ngFor="let profile of profiles">
     <form [formGroup]="configurationForm">
-      <mat-form-field>
+      <mat-form-field class="form-field">
         <input matInput placeholder="Broker Address" [(ngModel)]="broker.brokerAddress" formControlName="mqttBrokerAddress"/>
         <mat-hint>Insert Broker Address</mat-hint> 
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class="form-field">
         <input matInput placeholder="Broker Port" [(ngModel)]="broker.brokerPort" formControlName="mqttBrokerPort"/>
         <mat-hint>Insert Broker Port</mat-hint> 
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class="form-field">
         <input matInput placeholder="Client ID" [(ngModel)]="broker.clientId" formControlName="mqttClientID"/>
         <mat-hint>Insert Client Id</mat-hint> 
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class="form-field">
         <input matInput placeholder="Broker User" [(ngModel)]="broker.brokerUser" formControlName="mqttBrokerUser"/>
         <mat-hint>Insert Broker User</mat-hint> 
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class="form-field">
         <input matInput placeholder="Broker Password" [(ngModel)]="broker.brokerPassword" formControlName="mqttBrokerPassword"/>
         <mat-hint>Insert Broker Password</mat-hint> 
       </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Broker Protocol" [(ngModel)]="broker.protocol" formControlName="mqttBrokerProtocol"/>
-        <mat-hint>Insert Broker Protocol</mat-hint> 
+      <mat-form-field class="form-field">
+        <mat-select placeholder="Broker Protocol" [(ngModel)]="broker.protocol" formControlName="mqttBrokerProtocol">
+          <mat-option *ngFor="let proto of protocol" value="{{proto}}">
+            {{ proto }}
+          </mat-option>
+        </mat-select>
+        <mat-hint>Insert Broker Protocol</mat-hint>
       </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="QoS" [(ngModel)]="broker.qos" formControlName="mqttQos"/>
+      <mat-form-field class="form-field">
+        <mat-select placeholder="QoS" [(ngModel)]="broker.qos" formControlName="mqttQos">
+          <mat-option value="0">
+            0
+          </mat-option>
+          <mat-option value="1">
+            1
+          </mat-option>
+          <mat-option value="2">
+            2
+          </mat-option>
+        </mat-select>
         <mat-hint>Insert QoS type</mat-hint> 
       </mat-form-field>
     </form>
@@ -48,7 +62,7 @@
   <mat-card-content>
     <span>
       <form [formGroup]="topicForm">
-        <mat-form-field>
+        <mat-form-field class="form-field">
           <input matInput placeholder="Topic" [(ngModel)]="subscribeTo.topics[0]" formControlName="topicSubscribed"/>
           <mat-hint>Insert Topic to subscribe</mat-hint> 
         </mat-form-field>
@@ -66,8 +80,8 @@
       <mat-drawer-container class="example-container">
         <mat-drawer class="drawer" #drawer>
           <mat-list>
-            <mat-list-item  *ngFor="let message of messages">
-              {{ message }}
+            <mat-list-item  *ngFor="let message of messages; let in = index">
+              <button mat-button class="topic" (click)="openMessage(in)"> {{ message.topic }} </button>
             </mat-list-item>
           </mat-list>
         </mat-drawer>
@@ -79,4 +93,16 @@
     </mat-card-actions>
   </mat-card-content>
   
+</mat-card>
+
+<mat-card class="second-card">
+  <mat-card-title>
+    {{ focussedMessage.topic ? focussedMessage.topic : 'Click on a message to show it here' }}
+  </mat-card-title>
+  <mat-card-content>
+    {{ focussedMessage.message }}
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="removeMessage()">Clear</button>
+  </mat-card-actions>
 </mat-card>

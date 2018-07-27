@@ -2,7 +2,9 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BrokerConfiguration } from '../model/broker-configuration';
 import { Topic } from '../model/topic';
+import { protocols } from '../model/protocol';
 import connectClient from '../../app-mqtt';
+import { Messages } from '../model/messages';
 
 const storage = require('electron-storage');
 const mqtt = require('mqtt');
@@ -26,11 +28,14 @@ export class MqttClientComponent implements OnInit {
   broker: BrokerConfiguration = new BrokerConfiguration('', 1883, 'mqtt', 'Mqtt Client ID', '', '', '1');
   profiles: Array<BrokerConfiguration> = new Array();
   subscribeTo: Topic = new Topic(Array());
-  messages: Array<string> = new Array('');
+  messages: Array<Messages> = new Array(new Messages('', ''));
+  protocol = protocols;
+  focussedMessage = new Messages('', '');
 
   constructor(private _formBuilder: FormBuilder, private cd: ChangeDetectorRef) { }
 
   saveBrokerConfig() {
+    console.log(this.broker);
     storage.remove(dataPath + mqttConfig).then( err => {
         if (err) {
           console.error(err);
@@ -119,12 +124,11 @@ export class MqttClientComponent implements OnInit {
     const self = this;
     client.subscribe(this.subscribeTo.topics)
     .on('message', function (topic, message) {
-      console.log(message.toString());
-      self.messages = [...self.messages, topic.toString()];
-      if (self.messages.length > 50) {
-        self.messages.shift();
-        console.log('Removed an element');
-      }
+      const mess: Messages = new Messages('', '');
+      mess.topic = topic.toString();
+      mess.message = message.toString();
+      self.messages = [...self.messages, mess];
+      console.log(self.messages);
       self.cd.detectChanges();
     })
     .on('connect', (packet) => {
@@ -143,6 +147,15 @@ export class MqttClientComponent implements OnInit {
     this.cd.detectChanges();
   }
 
+  openMessage( index: number) {
+    this.focussedMessage.topic = this.messages[index].topic;
+    this.focussedMessage.message = this.messages[index].message;
+  }
+
+  removeMessage() {
+    this.focussedMessage = new Messages('', '');
+  }
+
   ngOnInit() {
 
     storage.isPathExists(dataPath + mqttConfig)
@@ -155,6 +168,8 @@ export class MqttClientComponent implements OnInit {
               this.broker.clientId        = data.clientId;
               this.broker.brokerPort      = data.brokerPort;
               this.broker.brokerUser      = data.brokerUser;
+              this.broker.qos             = data.qos;
+              this.broker.protocol        = data.protocol;
               this.profiles = [...this.profiles, this.broker];
               this.cd.detectChanges();
             })
