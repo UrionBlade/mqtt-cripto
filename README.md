@@ -13,3 +13,25 @@ Install dependencies with npm :
 ``` bash
 npm install
 ```
+Run the application :
+
+``` bash
+npm start
+```
+
+Build the application :
+
+- Linux 
+``` bash
+npm run electron:linux
+```
+
+- Windows
+``` bash 
+npm run electron:windows
+```
+
+- Mac
+``` bash
+npm run electron:mac
+```
