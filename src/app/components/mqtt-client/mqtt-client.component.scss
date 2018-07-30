@@ -8,18 +8,13 @@
     width: 70% !important;
 }
 
-.card {
-    margin-top:90px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.second-card {
-    
+.card {    
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 30px;
+    margin-bottom: 20px;
 }
+
 
 .example-container {
     width: 96%;
@@ -38,6 +33,24 @@
 
 .topic {
     margin-top: 30px;
+    width: 98%;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.subtitle {
+    margin-top: 20px;
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+
+.buttons {
+    margin-left: 5px !important;
+}
+
+.messages {
+
+    white-space: pre-wrap; 
     width: 98%;
     margin-left: 1%;
     margin-right: 1%;

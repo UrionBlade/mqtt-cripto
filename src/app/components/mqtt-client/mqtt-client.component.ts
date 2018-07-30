@@ -1,17 +1,24 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BrokerConfiguration } from '../model/broker-configuration';
-import { Topic } from '../model/topic';
-import { protocols } from '../model/protocol';
-import connectClient from '../../app-mqtt';
-import { Messages } from '../model/messages';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
+import { load } from 'protobufjs'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { BrokerConfiguration } from '../model/broker-configuration'
+import { Topic } from '../model/topic'
+import { protocols } from '../model/protocol'
+import connectClient from '../../app-mqtt'
+import { Messages } from '../model/messages'
+import { currentId } from 'async_hooks'
+import { stringify } from '@angular/compiler/src/util'
+import { ProtoInfo } from '../model/protoInfo'
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
-const storage = require('electron-storage');
-const mqtt = require('mqtt');
-const dataPath = 'data/';
-const mqttConfig = 'mqttConfig.json';
-const topicFile = 'topics.json';
-let client;
+
+const storage = require('electron-storage')
+const mqtt = require('mqtt')
+const dataPath = 'data/'
+const mqttConfig = 'mqttConfig.json'
+const topicFile = 'topics.json'
+const protoFile = 'proto.json'
+let client
 
 @Component({
   selector: 'app-mqtt-client',
@@ -22,36 +29,52 @@ let client;
 
 export class MqttClientComponent implements OnInit {
 
-  configurationForm: FormGroup;
-  topicForm: FormGroup;
+  configurationForm: FormGroup
+  topicForm: FormGroup
+  protoForm: FormGroup
 
-  broker: BrokerConfiguration = new BrokerConfiguration('', 1883, 'mqtt', 'Mqtt Client ID', '', '', '1');
-  subscribeTo: Topic = new Topic(Array());
-  messages: Array<Messages> = new Array(new Messages('', ''));
-  protocol = protocols;
-  focussedMessage = new Messages('', '');
+  broker: BrokerConfiguration = new BrokerConfiguration('', 1883, 'mqtt', 'Mqtt Client ID', '', '', '1')
+  subscribeTo: Topic = new Topic(Array())
+  messages: Array<Messages> = new Array(new Messages('', ''))
+  protocol = protocols
+  focussedMessage = new Messages('', '')
+  proto: ProtoInfo = new ProtoInfo('', '', '', '')
+  currentIndex: number
 
-  constructor(private _formBuilder: FormBuilder, private cd: ChangeDetectorRef) { }
+  constructor(private _formBuilder: FormBuilder, private cd: ChangeDetectorRef, public snackBar: MatSnackBar) { }
+
+  // ======================================================================= //
+  //                Show snackbar on the bottom of the page                  //
+  // ======================================================================= //
+
+  showSnackBar(message: string)  {
+    const config = new MatSnackBarConfig()
+    config.panelClass = ['snack-bar-container']
+    config.duration = 3000
+    this.snackBar.open(message, null, config)
+  }
 
   // ======================================================================= //
   //                Save broker configuration into JSON file.                //
   // ======================================================================= //
 
   saveBrokerConfig() {
-    console.log(this.broker);
+    console.log(this.broker)
     storage.remove(dataPath + mqttConfig).then( err => {
         if (err) {
-          console.error(err);
+          console.error(err)
         } else {
           storage.set(dataPath + mqttConfig, this.broker, ( error ) => {
             if (error) {
-              console.error(error);
+              console.error(error)
+              this.showSnackBar('Can\'t save your configuration.')
             } else {
-              console.log('File mqttConfig.json created into ', dataPath);
+              console.log('File mqttConfig.json created into ', dataPath)
+              this.showSnackBar('Configuration succesfully saved.')
             }
-          });
+          })
         }
-      });
+      })
   }
 
   // ======================================================================= //
@@ -64,17 +87,19 @@ export class MqttClientComponent implements OnInit {
       if (itDoes) {
         storage.remove(dataPath + mqttConfig).then( err => {
             if (err) {
-              console.error(err);
+              console.error(err)
+              this.showSnackBar('Can\'t delete broker config file.')
             } else {
-              this.broker.brokerAddress = '';
-              this.broker.brokerPassword = '';
-              this.broker.brokerUser = '';
-              this.cd.detectChanges();
-              console.log('File mqttConfig.json deleted from ', dataPath);
+              this.broker.brokerAddress = ''
+              this.broker.brokerPassword = ''
+              this.broker.brokerUser = ''
+              this.cd.detectChanges()
+              console.log('File mqttConfig.json deleted from ', dataPath)
+              this.showSnackBar('Deleted broker config file.')
             }
-          });
+          })
         }
-      });
+      })
   }
 
   // ======================================================================= //
@@ -89,29 +114,45 @@ export class MqttClientComponent implements OnInit {
       this.broker.brokerUser,
       this.broker.brokerPassword,
       this.broker.qos
-    );
+    )
+    this.showSnackBar('Broker connection estabilshed.')
   }
 
+  // ======================================================================= //
+  //            Disconnect to the broker when user click on button           //
+  // ======================================================================= //
+
   disconnectBroker() {
-    client.end();
-    console.log('Disconnected from broker succesfully');
+    client.end()
+    console.log('Disconnected from broker succesfully')
+    this.showSnackBar('Disconnected from broker')
   }
+
+  // ======================================================================= //
+  //         Save topic into JSON file when user click 'Save' button         //
+  // ======================================================================= //
 
   saveTopic() {
     storage.remove(dataPath + topicFile).then( err => {
         if (err) {
-          console.error(err);
+          console.error(err)
         } else {
           storage.set(dataPath + topicFile, this.subscribeTo, (error) => {
             if (error) {
-              console.error(error);
+              console.error(error)
+              this.showSnackBar('Can\'t save topic.')
             } else {
-              console.log('File topics.json created into ', dataPath);
+              console.log('File topics.json created into ', dataPath)
+              this.showSnackBar('Topic saved succesfully.')
             }
-          });
+          })
         }
-      });
+      })
   }
+
+  // ======================================================================= //
+  //       Delete topic into JSON file when user click 'Delete' button       //
+  // ======================================================================= //
 
   deleteTopic() {
     storage.isPathExists(dataPath + topicFile)
@@ -119,52 +160,169 @@ export class MqttClientComponent implements OnInit {
       if (itDoes) {
         storage.remove(dataPath + topicFile).then( err => {
             if (err) {
-              console.error(err);
+              console.error(err)
+              this.showSnackBar('Can\'t delete topic file.')
             } else {
-              this.subscribeTo.topics = new Array();
-              this.cd.detectChanges();
-              console.log('File topics.json deleted from ', dataPath);
+              this.subscribeTo.topics = new Array()
+              this.cd.detectChanges()
+              console.log('File topics.json deleted from ', dataPath)
+              this.showSnackBar('Topic file deleted succesfully.')
             }
-          });
+          })
         }
-      });
+      })
   }
+
+  // ======================================================================= //
+  //       Subscribe to a topic when user click 'Subscribe' button.          //
+  // ======================================================================= //
 
   subscribeTopic() {
-    this.saveTopic();
-    const self = this;
+
+    const self = this
+    this.showSnackBar(`Subscribed to topic ${this.subscribeTo.topics}.`)
     client.subscribe(this.subscribeTo.topics)
     .on('message', function (topic, message) {
-      const mess: Messages = new Messages('', '');
-      mess.topic = topic.toString();
-      mess.message = message.toString();
-      self.messages = [...self.messages, mess];
-      console.log(self.messages);
-      self.cd.detectChanges();
+      const mess: Messages = new Messages('', '')
+      mess.topic = topic.toString()
+      mess.message = message.toString()
+      self.messages = [...self.messages, mess]
+      self.cd.detectChanges()
     })
     .on('connect', (packet) => {
-      console.log('connected!', JSON.stringify(packet));
-    });
+      console.log('connected!', JSON.stringify(packet))
+    })
   }
+
+  // ======================================================================= //
+  //       Unsubscribe from a topic. This operation will clear message       //
+  //                               buffer too.                               //
+  // ======================================================================= //
 
   unsubscribeTopic() {
-    this.clearBuffer();
-    client.unsubscribe(this.subscribeTo.topics);
-    console.log('Succesfully unsubscribed');
+    this.clearBuffer()
+    client.unsubscribe(this.subscribeTo.topics)
+    console.log('Succesfully unsubscribed')
+    this.showSnackBar(`Unsubscribed from topic ${this.subscribeTo.topics} succesfully.`)
   }
+
+  // ======================================================================= //
+  //        Clear message buffer when user click on 'Clear' button.          //
+  //             Once you clear buffer, you lose all messages                //
+  // ======================================================================= //
 
   clearBuffer() {
-    this.messages = new Array();
-    this.cd.detectChanges();
+    this.messages = new Array()
+    this.cd.detectChanges()
+    this.showSnackBar('Message buffer cleared.')
   }
+
+  // ======================================================================= //
+  //          When user click on the topic into the topic list,              //
+  //               on the message card, the message appear.                  //
+  // ======================================================================= //
 
   openMessage( index: number) {
-    this.focussedMessage.topic = this.messages[index].topic;
-    this.focussedMessage.message = this.messages[index].message;
+    this.currentIndex = index
+    this.toHex()
+    console.log('Current message: ', this.focussedMessage.message)
+    this.showSnackBar('Opened clicked message.')
+    this.focussedMessage.topic = this.messages[index].topic
   }
 
+  // ======================================================================= //
+  //                  Convert the proto message to hex                       //
+  // ======================================================================= //
+
+  toHex() {
+    let result = ''
+    for (let i = 0; i < this.messages[this.currentIndex].message.length; i++) {
+      result  += '000' + this.messages[ this.currentIndex].message.charCodeAt(i).toString(16).slice(-4) + ' '
+    }
+    this.focussedMessage.message = result.toUpperCase()
+    this.showSnackBar('Message converted to HEX.')
+  }
+
+  // ======================================================================= //
+  //                Convert the proto message to string                      //
+  // ======================================================================= //
+
+  toStrings() {
+    this.focussedMessage.message = this.messages[this.currentIndex].message
+    this.showSnackBar('Message converted to STRING.')
+  }
+
+  // ======================================================================= //
+  //                 Convert the proto message to json                       //
+  // ======================================================================= //
+
+  toJson() {
+    const self = this
+    load(this.proto.protoBuffPath + '/' + this.proto.protoBuffFile, function(err, root) {
+      if (err) {
+        console.log(err)
+        this.showSnackBar('Failed to convert message to JSON.')
+        throw err
+      }
+      const MyMessage = root.lookupType(self.proto.protoBuffPackage + '.' + self.proto.protoBuffMessage)
+      const array: Uint8Array = Buffer.from(self.messages[self.currentIndex].message, 'utf8').slice()
+      self.focussedMessage.message = JSON.stringify(MyMessage.decode(array), null, '\t')
+      self.showSnackBar('Message converted to JSON.')
+    })
+  }
+
+  // ======================================================================= //
+  //                    Save proto info into a json file                     //
+  // ======================================================================= //
+
+  saveProto() {
+    storage.remove(dataPath + protoFile).then( err => {
+        if (err) {
+          console.error(err)
+        } else {
+          storage.set(dataPath + protoFile, this.proto, (error) => {
+            if (error) {
+              this.showSnackBar('Can\'t save proto info.')
+              console.error(error)
+            } else {
+              console.log('File proto.json created into ', dataPath)
+              this.showSnackBar('Proto info saved succesfully.')
+            }
+          })
+        }
+      })
+  }
+
+  // ======================================================================= //
+  //                    Save proto info into a json file                     //
+  // ======================================================================= //
+
+  deleteProto() {
+    storage.isPathExists(dataPath + protoFile)
+    .then(itDoes => {
+      if (itDoes) {
+        storage.remove(dataPath + protoFile).then( err => {
+            if (err) {
+              console.error(err)
+              this.showSnackBar('Can\'t delete proto info.')
+            } else {
+              this.proto = new ProtoInfo('', '', '', '')
+              this.cd.detectChanges()
+              console.log('File proto.json deleted from ', dataPath)
+              this.showSnackBar('Proto info deleted succesfully.')
+            }
+          })
+        }
+      })
+  }
+
+  // ======================================================================= //
+  //         When user click the button 'Remove' on message Card,            //
+  //                         the message disappear.                          //
+  // ======================================================================= //
+
   removeMessage() {
-    this.focussedMessage = new Messages('', '');
+    this.focussedMessage = new Messages('', '')
   }
 
   ngOnInit() {
@@ -174,34 +332,51 @@ export class MqttClientComponent implements OnInit {
         if (itDoes) {
           storage.get(dataPath + mqttConfig)
             .then(data => {
-              this.broker.brokerAddress   = data.brokerAddress;
-              this.broker.brokerPassword  = data.brokerPassword;
-              this.broker.clientId        = data.clientId;
-              this.broker.brokerPort      = data.brokerPort;
-              this.broker.brokerUser      = data.brokerUser;
-              this.broker.qos             = data.qos;
-              this.broker.protocol        = data.protocol;
-              this.cd.detectChanges();
+              this.broker.brokerAddress   = data.brokerAddress
+              this.broker.brokerPassword  = data.brokerPassword
+              this.broker.clientId        = data.clientId
+              this.broker.brokerPort      = data.brokerPort
+              this.broker.brokerUser      = data.brokerUser
+              this.broker.qos             = data.qos
+              this.broker.protocol        = data.protocol
+              this.cd.detectChanges()
+              this.showSnackBar('Mqtt config file succesfully charged.')
             })
             .catch(err => {
-              console.error(err);
-            });
+              console.error(err)
+            })
         }
-    });
+    })
 
     storage.isPathExists(dataPath + topicFile)
       .then(itDoes => {
         if (itDoes) {
           storage.get(dataPath + topicFile)
             .then(data => {
-              this.subscribeTo.topics = data.topics;
-              this.cd.detectChanges();
+              this.subscribeTo.topics = data.topics
+              this.cd.detectChanges()
+              this.showSnackBar('Topic file succesfully charged.')
             })
             .catch(err => {
-              console.error(err);
-            });
+              console.error(err)
+            })
         }
-    });
+    })
+
+    storage.isPathExists(dataPath + protoFile)
+    .then(itDoes => {
+      if (itDoes) {
+        storage.get(dataPath + protoFile)
+          .then(data => {
+            this.proto = data
+            this.cd.detectChanges()
+            this.showSnackBar('Proto file succesfully charged.')
+          })
+          .catch(err => {
+            console.error(err)
+          })
+      }
+  })
 
     this.configurationForm = this._formBuilder.group({
       mqttBrokerAddress:  this._formBuilder.control,
@@ -211,11 +386,18 @@ export class MqttClientComponent implements OnInit {
       mqttBrokerPassword: this._formBuilder.control,
       mqttBrokerProtocol: this._formBuilder.control,
       mqttQos:            this._formBuilder.control,
-    });
+    })
 
     this.topicForm = this._formBuilder.group({
       topicSubscribed:    this._formBuilder.control
-    });
+    })
+
+    this.protoForm = this._formBuilder.group({
+      protoBuffPath:      this._formBuilder.control,
+      protoBuffFile:      this._formBuilder.control,
+      protoPackage:       this._formBuilder.control,
+      protoMessage:       this._formBuilder.control
+    })
 
   }
 

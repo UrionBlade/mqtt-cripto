@@ -49,13 +49,13 @@
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="saveBrokerConfig()">Save</button>
-    <button mat-raised-button color="primary" (click)="connectBroker()">Connect</button>
-    <button mat-raised-button color="warn" (click)="disconnectBroker()">Disconnect</button>
-    <button mat-raised-button color="warn" (click)="deleteBrokerConfig()">Delete</button>
+   <span  class="buttons"> <button mat-raised-button color="primary" (click)="saveBrokerConfig()">Save</button></span>
+   <span  class="buttons"> <button mat-raised-button color="primary" (click)="connectBroker()">Connect</button></span>
+   <span  class="buttons"> <button mat-raised-button color="warn" (click)="disconnectBroker()">Disconnect</button></span>
+   <span  class="buttons"> <button mat-raised-button color="warn" (click)="deleteBrokerConfig()">Delete</button></span>
   </mat-card-actions>
 </mat-card>
-<mat-card class="second-card">
+<mat-card class="card">
   <mat-card-title>
     Topic
   </mat-card-title>
@@ -72,16 +72,16 @@
       
     </span>
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="saveTopic()">Save</button>
-      <button mat-raised-button color="primary" (click)="subscribeTopic()" (click)="drawer.open()">Subscribe</button>
-      <button mat-raised-button color="primary" (click)="clearBuffer()">Clear</button>
-      <button mat-raised-button color="warn" (click)="unsubscribeTopic()" (click)="drawer.close()">Unsubscribe</button>
-      <button mat-raised-button color="warn" (click)="deleteTopic()">Delete</button>
+     <span  class="buttons"> <button mat-raised-button color="primary" (click)="saveTopic()">Save</button></span>
+     <span  class="buttons"> <button mat-raised-button color="primary" (click)="subscribeTopic()" (click)="drawer.open()">Subscribe</button></span>
+     <span  class="buttons"> <button mat-raised-button color="primary" (click)="clearBuffer()">Clear</button></span>
+     <span  class="buttons"> <button mat-raised-button color="warn" (click)="unsubscribeTopic()" (click)="drawer.close()">Unsubscribe</button></span>
+     <span  class="buttons"> <button mat-raised-button color="warn" (click)="deleteTopic()">Delete</button></span>
       <mat-drawer-container class="example-container">
         <mat-drawer class="drawer" #drawer>
           <mat-list>
             <mat-list-item  *ngFor="let message of messages; let in = index">
-              <button mat-button class="topic" (click)="openMessage(in)"> {{ message.topic }} </button>
+             <span  class="buttons"> <button mat-button class="topic" (click)="openMessage(in)"> {{ message.topic }} </button></span>
             </mat-list-item>
           </mat-list>
         </mat-drawer>
@@ -95,14 +95,50 @@
   
 </mat-card>
 
-<mat-card class="second-card">
+<mat-card class="card">
   <mat-card-title>
-    {{ focussedMessage.topic ? focussedMessage.topic : 'Click on a message to show it here' }}
+    {{ focussedMessage.topic ? focussedMessage.topic : 'Click on a topic to show the message here' }}
   </mat-card-title>
   <mat-card-content>
-    {{ focussedMessage.message }}
+    <mat-card-subtitle class="subtitle">
+      Protobuff to decode 
+    </mat-card-subtitle>
+
+    <form [formGroup]="protoForm">
+      <mat-form-field class="form-field">
+        <input matInput placeholder="Proto Buff Path" [(ngModel)]="proto.protoBuffPath" formControlName="protoBuffPath"/>
+        <mat-hint>Insert here the path where proto files are</mat-hint> 
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <input matInput placeholder="Proto Buff File Name" [(ngModel)]="proto.protoBuffFile" formControlName="protoBuffFile"/>
+        <mat-hint>Insert here the proto file name</mat-hint> 
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+          <input matInput placeholder="Proto Buff Package" [(ngModel)]="proto.protoBuffPackage" formControlName="protoPackage"/>
+          <mat-hint>Insert here the package</mat-hint> 
+        </mat-form-field>
+  
+        <mat-form-field class="form-field">
+          <input matInput placeholder="Proto Buff Message" [(ngModel)]="proto.protoBuffMessage" formControlName="protoMessage"/>
+          <mat-hint>Insert here the proto message type</mat-hint> 
+        </mat-form-field>
+    </form>
+
+    <mat-card-subtitle class="subtitle">
+      Message:
+    </mat-card-subtitle>
+    <span class="messages">
+      {{ focussedMessage.message }}
+    </span>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="removeMessage()">Clear</button>
+    <span class="buttons"> <button mat-raised-button color="primary" (click)="saveProto()">Save</button></span>
+    <span class="buttons"> <button mat-raised-button color="primary" (click)="removeMessage()">Clear</button></span>
+    <span class="buttons"> <button mat-raised-button color="warn" (click)="deleteProto()">Delete</button></span>
+    <span class="buttons"> <button mat-raised-button color="accent" (click)="toHex()">Hex</button></span>
+    <span class="buttons"> <button mat-raised-button color="accent" (click)="toStrings()">String</button></span>
+    <span class="buttons"> <button mat-raised-button color="accent" (click)="toJson()">Json</button></span>
   </mat-card-actions>
 </mat-card>
