@@ -5,7 +5,7 @@
 Clone this repository locally :
 
 ``` bash
-git clone https://github.com/mqtt-cripto.git
+git clone https://github.com/${user}/mqtt-cripto.git
 ```
 
 Install dependencies with npm :
