@@ -261,13 +261,14 @@ export class MqttClientComponent implements OnInit {
     load(this.proto.protoBuffPath + '/' + this.proto.protoBuffFile, function(err, root) {
       if (err) {
         console.log(err)
-        this.showSnackBar('Failed to convert message to JSON.')
+        self.showSnackBar('Failed to convert message to JSON.')
         throw err
+      } else {
+        const MyMessage = root.lookupType(self.proto.protoBuffPackage + '.' + self.proto.protoBuffMessage)
+        const array: Uint8Array = Buffer.from(self.messages[self.currentIndex].message, 'utf8').slice()
+        self.focussedMessage.message = JSON.stringify(MyMessage.decode(array), null, '\t')
+        self.showSnackBar('Message converted to JSON.')
       }
-      const MyMessage = root.lookupType(self.proto.protoBuffPackage + '.' + self.proto.protoBuffMessage)
-      const array: Uint8Array = Buffer.from(self.messages[self.currentIndex].message, 'utf8').slice()
-      self.focussedMessage.message = JSON.stringify(MyMessage.decode(array), null, '\t')
-      self.showSnackBar('Message converted to JSON.')
     })
   }
 
@@ -340,7 +341,6 @@ export class MqttClientComponent implements OnInit {
               this.broker.qos             = data.qos
               this.broker.protocol        = data.protocol
               this.cd.detectChanges()
-              this.showSnackBar('Mqtt config file succesfully charged.')
             })
             .catch(err => {
               console.error(err)
@@ -355,7 +355,6 @@ export class MqttClientComponent implements OnInit {
             .then(data => {
               this.subscribeTo.topics = data.topics
               this.cd.detectChanges()
-              this.showSnackBar('Topic file succesfully charged.')
             })
             .catch(err => {
               console.error(err)
@@ -370,7 +369,6 @@ export class MqttClientComponent implements OnInit {
           .then(data => {
             this.proto = data
             this.cd.detectChanges()
-            this.showSnackBar('Proto file succesfully charged.')
           })
           .catch(err => {
             console.error(err)

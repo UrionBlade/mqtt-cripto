@@ -1,18 +1,18 @@
 {
-  "name": "angular-electron",
-  "version": "4.1.0",
-  "description": "Angular 6 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "name": "mqtt-cripto",
+  "version": "1.0.0",
+  "description": "Mqtt client",
+  "homepage": "https://github.com/UrionBlade/mqtt-cripto.git",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Matteo Poli",
+    "email": "matteo.poli4@gmail.com"
   },
   "keywords": [
-    "angular",
-    "angular 6",
-    "electron",
-    "typescript",
-    "sass"
+    "mqtt",
+    "mqtt-client",
+    "mqtt-connector",
+    "mqtt-topics",
+    "protobuf"
   ],
   "main": "main.js",
   "private": true,

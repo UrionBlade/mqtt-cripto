@@ -4,11 +4,12 @@
 /dist
 /tmp
 /out-tsc
-/app-builds
+/mqtt-cripto
 main.js
 
 # dependencies
 /node_modules
+!/node_modules/mqtt
 
 # IDEs and editors
 /.idea
