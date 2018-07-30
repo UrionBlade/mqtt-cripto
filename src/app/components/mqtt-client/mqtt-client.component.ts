@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
-import { load } from 'protobufjs'
+import { Root } from 'protobufjs'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { BrokerConfiguration } from '../model/broker-configuration'
 import { Topic } from '../model/topic'
@@ -14,6 +14,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 const storage = require('electron-storage')
 const mqtt = require('mqtt')
+const path = require('path')
 const dataPath = 'data/'
 const mqttConfig = 'mqttConfig.json'
 const topicFile = 'topics.json'
@@ -35,7 +36,7 @@ export class MqttClientComponent implements OnInit {
 
   broker: BrokerConfiguration = new BrokerConfiguration('', 1883, 'mqtt', 'Mqtt Client ID', '', '', '1')
   subscribeTo: Topic = new Topic(Array())
-  messages: Array<Messages> = new Array(new Messages('', ''))
+  messages: Array<Messages> = new Array()
   protocol = protocols
   focussedMessage = new Messages('', '')
   proto: ProtoInfo = new ProtoInfo('', '', '', '')
@@ -107,6 +108,11 @@ export class MqttClientComponent implements OnInit {
   // ======================================================================= //
 
   connectBroker() {
+
+    if (client) {
+      client.end()
+    }
+
     client = connectClient(
       this.broker.brokerAddress,
       this.broker.brokerPort,
@@ -258,7 +264,13 @@ export class MqttClientComponent implements OnInit {
 
   toJson() {
     const self = this
-    load(this.proto.protoBuffPath + '/' + this.proto.protoBuffFile, function(err, root) {
+    const pbRoot = new Root()
+    pbRoot.resolvePath = (origin: string, target: string) => {
+      const result = self.proto.protoBuffPath + '/' + target
+      return result
+    }
+
+    pbRoot.load(this.proto.protoBuffFile, function(err, root) {
       if (err) {
         console.log(err)
         self.showSnackBar('Failed to convert message to JSON.')

@@ -81,7 +81,7 @@
         <mat-drawer class="drawer" #drawer>
           <mat-list>
             <mat-list-item  *ngFor="let message of messages; let in = index">
-             <span  class="buttons"> <button mat-button class="topic" (click)="openMessage(in)"> {{ message.topic }} </button></span>
+             <span  class="buttons"> <button mat-button class="topic" (click)="openMessage(in)">{{ in }} :   {{ message.topic }} </button></span>
             </mat-list-item>
           </mat-list>
         </mat-drawer>
