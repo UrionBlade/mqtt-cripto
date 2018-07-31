@@ -176,6 +176,20 @@
         <input matInput placeholder="Topic" [(ngModel)]="subscribeTo.topics[0]" formControlName="publishTopic"/>
         <mat-hint>Insert Topic where publish</mat-hint> 
       </mat-form-field>
+      <mat-form-field class="form-field">
+          <mat-select placeholder="QoS" [(ngModel)]="publishingQos" formControlName="publishQos">
+            <mat-option value="0">
+              0
+            </mat-option>
+            <mat-option value="1">
+              1
+            </mat-option>
+            <mat-option value="2">
+              2
+            </mat-option>
+          </mat-select>
+          <mat-hint>Insert QoS type. If no one selected, default is 0</mat-hint> 
+        </mat-form-field>
       <span class="buttons"> <button mat-raised-button matTooltip="Publish message" color="primary" (click)="publishingMessage ? publish() : showSnackBar('No message selected')">Publish</button></span>
       <mat-form-field class="form-field-text-area">
         <textarea matInput

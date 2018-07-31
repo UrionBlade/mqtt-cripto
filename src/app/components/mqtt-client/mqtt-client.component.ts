@@ -46,6 +46,7 @@ export class MqttClientComponent implements OnInit {
   proto: ProtoInfo = new ProtoInfo('', '', '', '')
   currentIndex: number
   publishingMessage: string
+  publishingQos: number
 
   constructor(private _formBuilder: FormBuilder, private cd: ChangeDetectorRef, public snackBar: MatSnackBar, private ngZone: NgZone) { }
 
@@ -372,7 +373,7 @@ export class MqttClientComponent implements OnInit {
       } else {
         const myMessage = root.lookupType(self.proto.protoBuffPackage + '.' + self.proto.protoBuffMessage)
         const buffer = myMessage.encode(JSON.parse(self.publishingMessage)).finish()
-        client.publish(self.subscribeTo.topics[0], buffer)
+        client.publish(self.subscribeTo.topics[0], buffer, self.publishingQos ? self.publishingQos : '0')
         self.showSnackBar('Message published on MQTT.')
       }
     })
@@ -455,7 +456,8 @@ export class MqttClientComponent implements OnInit {
       publishProtoPath:   this._formBuilder.control,
       publishProtoFile:   this._formBuilder.control,
       publishProtoPack:   this._formBuilder.control,
-      publishProtoMess:   this._formBuilder.control
+      publishProtoMess:   this._formBuilder.control,
+      publishQos:         this._formBuilder.control
     })
 
   }
