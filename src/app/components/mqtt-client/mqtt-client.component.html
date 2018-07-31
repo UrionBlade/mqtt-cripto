@@ -49,10 +49,10 @@
     </form>
   </mat-card-content>
   <mat-card-actions>
-   <span  class="buttons"> <button mat-raised-button color="primary" (click)="saveBrokerConfig()">Save</button></span>
-   <span  class="buttons"> <button mat-raised-button color="primary" (click)="connectBroker()">Connect</button></span>
-   <span  class="buttons"> <button mat-raised-button color="warn" (click)="disconnectBroker()">Disconnect</button></span>
-   <span  class="buttons"> <button mat-raised-button color="warn" (click)="deleteBrokerConfig()">Delete</button></span>
+   <span  class="buttons"> <button mat-raised-button matTooltip="Save broker config" color="primary" (click)="saveBrokerConfig()">Save</button></span>
+   <span  class="buttons"> <button mat-raised-button matTooltip="Connect to the broker server" color="primary" (click)="connectBroker()">Connect</button></span>
+   <span  class="buttons"> <button mat-raised-button matTooltip="Disconnect from the broker server" color="warn" (click)="disconnectBroker()">Disconnect</button></span>
+   <span  class="buttons"> <button mat-raised-button matTooltip="Delete saved broker configuration" color="warn" (click)="deleteBrokerConfig()">Delete</button></span>
   </mat-card-actions>
 </mat-card>
 <mat-card class="card">
@@ -72,11 +72,11 @@
       
     </span>
     <mat-card-actions>
-     <span  class="buttons"> <button mat-raised-button color="primary" (click)="saveTopic()">Save</button></span>
-     <span  class="buttons"> <button mat-raised-button color="primary" (click)="subscribeTopic()" (click)="drawer.open()">Subscribe</button></span>
-     <span  class="buttons"> <button mat-raised-button color="primary" (click)="clearBuffer()">Clear</button></span>
-     <span  class="buttons"> <button mat-raised-button color="warn" (click)="unsubscribeTopic()" (click)="drawer.close()">Unsubscribe</button></span>
-     <span  class="buttons"> <button mat-raised-button color="warn" (click)="deleteTopic()">Delete</button></span>
+     <span  class="buttons"> <button mat-raised-button matTooltip="Save topic" color="primary" (click)="saveTopic()">Save</button></span>
+     <span  class="buttons"> <button mat-raised-button matTooltip="Subscribe to the selected topic" color="primary" (click)="subscribeTopic()" (click)="drawer.open()">Subscribe</button></span>
+     <span  class="buttons"> <button mat-raised-button matTooltip="Clear proto buffer" color="primary" (click)="clearBuffer()">Clear</button></span>
+     <span  class="buttons"> <button mat-raised-button matTooltip="Unsubscribe from selected topic" color="warn" (click)="unsubscribeTopic()" (click)="drawer.close()">Unsubscribe</button></span>
+     <span  class="buttons"> <button mat-raised-button matTooltip="Delete saved topic" color="warn" (click)="deleteTopic()">Delete</button></span>
       <mat-drawer-container class="example-container">
         <mat-drawer class="drawer" #drawer>
           <mat-list>
@@ -134,12 +134,12 @@
     </span>
   </mat-card-content>
   <mat-card-actions>
-    <span class="buttons"> <button mat-raised-button color="primary" (click)="saveProto()">Save</button></span>
-    <span class="buttons"> <button mat-raised-button color="primary" (click)="removeMessage()">Clear</button></span>
-    <span class="buttons"> <button mat-raised-button color="warn" (click)="deleteProto()">Delete</button></span>
-    <span class="buttons"> <button mat-raised-button color="accent" (click)="toHex()">Hex</button></span>
-    <span class="buttons"> <button mat-raised-button color="accent" (click)="toStrings()">String</button></span>
-    <span class="buttons"> <button mat-raised-button color="accent" (click)="toJson()">Json</button></span>
+    <span class="buttons"> <button mat-raised-button matTooltip="Save proto info" color="primary" (click)="saveProto()">Save</button></span>
+    <span class="buttons"> <button mat-raised-button matTooltip="Clear selected message" color="primary" (click)="removeMessage()">Clear</button></span>
+    <span class="buttons"> <button mat-raised-button matTooltip="Delete saved proto info" color="warn" (click)="deleteProto()">Delete</button></span>
+    <span class="buttons"> <button mat-raised-button matTooltip="Convert to Hex proto message" color="accent" (click)="toHex()">Hex</button></span>
+    <span class="buttons"> <button mat-raised-button matTooltip="Convert to string proto message" color="accent" (click)="toStrings()">String</button></span>
+    <span class="buttons"> <button mat-raised-button matTooltip="Convert to json proto message" color="accent" (click)="toJson()">Json</button></span>
   </mat-card-actions>
 </mat-card>
 
@@ -176,7 +176,7 @@
         <input matInput placeholder="Topic" [(ngModel)]="subscribeTo.topics[0]" formControlName="publishTopic"/>
         <mat-hint>Insert Topic where publish</mat-hint> 
       </mat-form-field>
-      <span class="buttons"> <button mat-raised-button color="primary" (click)="publish()">Publish</button></span>
+      <span class="buttons"> <button mat-raised-button matTooltip="Publish message" color="primary" (click)="publishingMessage ? publish() : showSnackBar('No message selected')">Publish</button></span>
       <mat-form-field class="form-field-text-area">
         <textarea matInput
                   cdkTextareaAutosize
