@@ -191,13 +191,13 @@
           <mat-hint>Insert QoS type. If no one selected, default is 0</mat-hint> 
         </mat-form-field>
       <span class="buttons"> <button mat-raised-button matTooltip="Publish message" color="primary" (click)="publishingMessage ? publish() : showSnackBar('No message selected')">Publish</button></span>
-      <mat-form-field class="form-field-text-area">
+      <mat-form-field class="form-field-text-area" appearance="outline">
+        <mat-label>Write here your message</mat-label>
         <textarea matInput
                   cdkTextareaAutosize
                   #autosize="cdkTextareaAutosize"
                   cdkAutosizeMinRows="5"
-                  class="textarea" 
-                  placeholder="Message" 
+                  class="textarea"
                   [(ngModel)]="publishingMessage" 
                   formControlName="publishMessage"
           ></textarea>
