@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, NgZone } from '@angular/core'
+import {CdkTextareaAutosize} from '@angular/cdk/text-field'
 import { Root } from 'protobufjs'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { BrokerConfiguration } from '../model/broker-configuration'
@@ -9,7 +10,9 @@ import { Messages } from '../model/messages'
 import { currentId } from 'async_hooks'
 import { stringify } from '@angular/compiler/src/util'
 import { ProtoInfo } from '../model/protoInfo'
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material'
+import {take} from 'rxjs/operators'
+
 
 
 const storage = require('electron-storage')
@@ -33,6 +36,7 @@ export class MqttClientComponent implements OnInit {
   configurationForm: FormGroup
   topicForm: FormGroup
   protoForm: FormGroup
+  publishForm: FormGroup
 
   broker: BrokerConfiguration = new BrokerConfiguration('', 1883, 'mqtt', 'Mqtt Client ID', '', '', '1')
   subscribeTo: Topic = new Topic(Array())
@@ -41,8 +45,17 @@ export class MqttClientComponent implements OnInit {
   focussedMessage = new Messages('', '')
   proto: ProtoInfo = new ProtoInfo('', '', '', '')
   currentIndex: number
+  publishingMessage: string
 
-  constructor(private _formBuilder: FormBuilder, private cd: ChangeDetectorRef, public snackBar: MatSnackBar) { }
+  constructor(private _formBuilder: FormBuilder, private cd: ChangeDetectorRef, public snackBar: MatSnackBar, private ngZone: NgZone) { }
+
+  @ViewChild('autosize') autosize: CdkTextareaAutosize;
+
+  triggerResize() {
+    // Wait for changes to be applied, then trigger textarea resize.
+    this.ngZone.onStable.pipe(take(1))
+        .subscribe(() => this.autosize.resizeToFitContent(true));
+  }
 
   // ======================================================================= //
   //                Show snackbar on the bottom of the page                  //
@@ -52,6 +65,7 @@ export class MqttClientComponent implements OnInit {
     const config = new MatSnackBarConfig()
     config.panelClass = ['snack-bar-container']
     config.duration = 3000
+    config.verticalPosition = 'top'
     this.snackBar.open(message, null, config)
   }
 
@@ -244,6 +258,9 @@ export class MqttClientComponent implements OnInit {
     let result = ''
     for (let i = 0; i < this.messages[this.currentIndex].message.length; i++) {
       result  += '000' + this.messages[ this.currentIndex].message.charCodeAt(i).toString(16).slice(-4) + ' '
+      if ( i % 15 === 0 ) {
+        result += '\n'
+      }
     }
     this.focussedMessage.message = result.toUpperCase()
     this.showSnackBar('Message converted to HEX.')
@@ -338,6 +355,29 @@ export class MqttClientComponent implements OnInit {
     this.focussedMessage = new Messages('', '')
   }
 
+
+  publish() {
+    const self = this
+    const pbRoot = new Root()
+    pbRoot.resolvePath = (origin: string, target: string) => {
+      const result = self.proto.protoBuffPath + '/' + target
+      return result
+    }
+
+    pbRoot.load(this.proto.protoBuffFile, function(err, root) {
+      if (err) {
+        console.log(err)
+        self.showSnackBar('Failed to convert message to JSON.')
+        throw err
+      } else {
+        const myMessage = root.lookupType(self.proto.protoBuffPackage + '.' + self.proto.protoBuffMessage)
+        const buffer = myMessage.encode(JSON.parse(self.publishingMessage)).finish()
+        client.publish(self.subscribeTo.topics[0], buffer)
+        self.showSnackBar('Message published on MQTT.')
+      }
+    })
+  }
+
   ngOnInit() {
 
     storage.isPathExists(dataPath + mqttConfig)
@@ -407,6 +447,15 @@ export class MqttClientComponent implements OnInit {
       protoBuffFile:      this._formBuilder.control,
       protoPackage:       this._formBuilder.control,
       protoMessage:       this._formBuilder.control
+    })
+
+    this.publishForm = this._formBuilder.group({
+      publishTopic:       this._formBuilder.control,
+      publishMessage:     this._formBuilder.control,
+      publishProtoPath:   this._formBuilder.control,
+      publishProtoFile:   this._formBuilder.control,
+      publishProtoPack:   this._formBuilder.control,
+      publishProtoMess:   this._formBuilder.control
     })
 
   }

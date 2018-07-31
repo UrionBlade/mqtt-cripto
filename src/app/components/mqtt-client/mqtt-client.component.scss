@@ -29,6 +29,7 @@
 
 .form-field {
     margin: 3px;
+    width: 20%;
 }
 
 .topic {
@@ -54,4 +55,14 @@
     width: 98%;
     margin-left: 1%;
     margin-right: 1%;
+}
+
+.form-field-text-area {
+    margin: 3px;
+    width: 100%;
+    height: 200px;
+}
+
+.textarea {
+    height: 100%;
 }
