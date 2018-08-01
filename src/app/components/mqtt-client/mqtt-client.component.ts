@@ -7,13 +7,9 @@ import { Topic } from '../model/topic'
 import { protocols } from '../model/protocol'
 import connectClient from '../../app-mqtt'
 import { Messages } from '../model/messages'
-import { currentId } from 'async_hooks'
-import { stringify } from '@angular/compiler/src/util'
 import { ProtoInfo } from '../model/protoInfo'
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material'
 import {take} from 'rxjs/operators'
-
-
 
 const storage = require('electron-storage')
 const mqtt = require('mqtt')

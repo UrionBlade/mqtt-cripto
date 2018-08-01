@@ -7,20 +7,23 @@ import { FormsModule } from '@angular/forms';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module'
 
 // NG Translate
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 
-import { ElectronService } from './providers/electron.service';
+import { ElectronService } from './providers/electron.service'
 
-import { WebviewDirective } from './directives/webview.directive';
+import { WebviewDirective } from './directives/webview.directive'
 
-import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
-import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { AppComponent } from './app.component'
+import { HomeComponent } from './components/home/home.component'
+import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms'
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar'
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar'
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar'
 import {
     MatButtonModule,
     MatAutocompleteModule,
@@ -47,7 +50,7 @@ import {
     MatStepperModule,
     MatTableModule,
     MatTabsModule,
-} from '@angular/material';
+} from '@angular/material'
 import {
     MatMenuModule,
     MatToolbarModule,
@@ -57,8 +60,12 @@ import {
     MatInputModule,
     MatTooltipModule
 } from '@angular/material';
-import { MqttClientComponent } from './components/mqtt-client/mqtt-client.component';
-import { HeaderComponent } from './components/header/header.component';
+import { MqttClientComponent } from './components/mqtt-client/mqtt-client.component'
+import { HeaderComponent } from './components/header/header.component'
+
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true
+}
 
 const materialModules = [
     MatInputModule,
@@ -93,12 +100,12 @@ const materialModules = [
     MatStepperModule,
     MatTableModule,
     MatTabsModule,
-  ];
+  ]
 
 const formsModule = [
     FormsModule,
     ReactiveFormsModule,
-];
+]
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -121,6 +128,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     formsModule,
     HttpClientModule,
     AppRoutingModule,
+    PerfectScrollbarModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -130,7 +138,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     })
   ],
   exports: [],
-  providers: [ElectronService],
+  providers: [
+    ElectronService,
+    {
+      provide: PERFECT_SCROLLBAR_CONFIG,
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

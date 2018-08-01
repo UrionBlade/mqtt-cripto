@@ -79,15 +79,14 @@
      <span  class="buttons"> <button mat-raised-button matTooltip="Delete saved topic" color="warn" (click)="deleteTopic()">Delete</button></span>
       <mat-drawer-container class="example-container">
         <mat-drawer class="drawer" #drawer>
-          <mat-list>
-            <mat-list-item  *ngFor="let message of messages; let in = index">
-             <span  class="buttons"> <button mat-button class="topic" (click)="openMessage(in)">{{ in }} :   {{ message.topic }} </button></span>
-            </mat-list-item>
-          </mat-list>
+          <perfect-scrollbar>      
+            <mat-list>
+              <mat-list-item  *ngFor="let message of messages; let in = index">
+              <span  class="buttons"> <button mat-button class="topic" (click)="openMessage(in)">{{ in }} :   {{ message.topic }} </button></span>
+              </mat-list-item>
+            </mat-list>
+          </perfect-scrollbar>
         </mat-drawer>
-        <mat-drawer-content>
-          
-        </mat-drawer-content>
       </mat-drawer-container>
 
     </mat-card-actions>
