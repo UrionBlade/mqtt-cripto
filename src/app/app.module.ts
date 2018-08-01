@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import '../polyfills';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
@@ -16,14 +16,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { ElectronService } from './providers/electron.service'
 
 import { WebviewDirective } from './directives/webview.directive'
-
-import { AppComponent } from './app.component'
-import { HomeComponent } from './components/home/home.component'
-import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms'
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar'
-import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar'
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar'
+import { PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar'
 import {
     MatButtonModule,
     MatAutocompleteModule,
@@ -50,8 +44,6 @@ import {
     MatStepperModule,
     MatTableModule,
     MatTabsModule,
-} from '@angular/material'
-import {
     MatMenuModule,
     MatToolbarModule,
     MatIconModule,
@@ -60,6 +52,7 @@ import {
     MatInputModule,
     MatTooltipModule
 } from '@angular/material';
+import { AppComponent } from './app.component'
 import { MqttClientComponent } from './components/mqtt-client/mqtt-client.component'
 import { HeaderComponent } from './components/header/header.component'
 
@@ -116,7 +109,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     HeaderComponent,
-    HomeComponent,
     MqttClientComponent,
     WebviewDirective,
   ],

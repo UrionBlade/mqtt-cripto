@@ -281,6 +281,7 @@ export class MqttClientComponent implements OnInit {
     const pbRoot = new Root()
     pbRoot.resolvePath = (origin: string, target: string) => {
       const result = self.proto.protoBuffPath + '/' + target
+      console.log('Result: ', result)
       return result
     }
 
@@ -292,6 +293,7 @@ export class MqttClientComponent implements OnInit {
       } else {
         const MyMessage = root.lookupType(self.proto.protoBuffPackage + '.' + self.proto.protoBuffMessage)
         const array: Uint8Array = Buffer.from(self.messages[self.currentIndex].message, 'utf8').slice()
+        console.log('Array', array)
         self.focussedMessage.message = JSON.stringify(MyMessage.decode(array), null, '\t')
         self.showSnackBar('Message converted to JSON.')
       }
@@ -369,6 +371,7 @@ export class MqttClientComponent implements OnInit {
       } else {
         const myMessage = root.lookupType(self.proto.protoBuffPackage + '.' + self.proto.protoBuffMessage)
         const buffer = myMessage.encode(JSON.parse(self.publishingMessage)).finish()
+        console.log('Buffer: ', buffer)
         client.publish(self.subscribeTo.topics[0], buffer, self.publishingQos ? self.publishingQos : '0')
         self.showSnackBar('Message published on MQTT.')
       }
