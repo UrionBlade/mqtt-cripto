@@ -7,5 +7,5 @@ export class BrokerConfiguration {
         public brokerUser:      string,
         public brokerPassword:  string,
         public qos:             string
-    ){}
+    ) {}
 }

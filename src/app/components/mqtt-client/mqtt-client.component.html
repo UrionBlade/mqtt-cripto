@@ -129,7 +129,7 @@
       Message:
     </mat-card-subtitle>
     <span class="messages">
-      <pre>{{ focussedMessage.message }}</pre>
+      <pre id="focussed-message">{{ focussedMessage.message }}</pre>
     </span>
   </mat-card-content>
   <mat-card-actions>
@@ -139,6 +139,7 @@
     <span class="buttons"> <button mat-raised-button matTooltip="Convert to Hex proto message" color="accent" (click)="toHex()">Hex</button></span>
     <span class="buttons"> <button mat-raised-button matTooltip="Convert to string proto message" color="accent" (click)="toStrings()">String</button></span>
     <span class="buttons"> <button mat-raised-button matTooltip="Convert to json proto message" color="accent" (click)="toJson()">Json</button></span>
+    <span class="buttons"> <button mat-raised-button matTooltip="Copy message to clipboard" color="accent" (click)="copyMessage(focussedMessage.message)">Copy</button></span>
   </mat-card-actions>
 </mat-card>
 
@@ -189,7 +190,9 @@
           </mat-select>
           <mat-hint>Insert QoS type. If no one selected, default is 0</mat-hint> 
         </mat-form-field>
-      <span class="buttons"> <button mat-raised-button matTooltip="Publish message" color="primary" (click)="publishingMessage ? publish() : showSnackBar('No message selected')">Publish</button></span>
+      <span class="buttons"> <button mat-raised-button matTooltip="Publish message" color="primary" (click)="publishingMessage ? publish() : showSnackBar('No message selected')">Publish as Proto</button></span>
+      <span class="buttons"> <button mat-raised-button matTooltip="Publish message" color="primary" (click)="publishingMessage ? publishHex() : showSnackBar('No message selected')">Publish as Hex</button></span>
+      <span class="buttons"> <button mat-raised-button matTooltip="Publish message" color="primary" (click)="publishingMessage ? publishString() : showSnackBar('No message selected')">Publish as String</button></span>
       <mat-form-field class="form-field-text-area" appearance="outline">
         <mat-label>Write here your message</mat-label>
         <textarea matInput

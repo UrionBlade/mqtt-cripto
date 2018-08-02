@@ -7,6 +7,7 @@ import { Topic } from '../model/topic'
 import { protocols } from '../model/protocol'
 import connectClient from '../../app-mqtt'
 import { Messages } from '../model/messages'
+import { ShowedMessage } from '../model/showed-message'
 import { ProtoInfo } from '../model/protoInfo'
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material'
 import {take} from 'rxjs/operators'
@@ -38,7 +39,7 @@ export class MqttClientComponent implements OnInit {
   subscribeTo: Topic = new Topic(Array())
   messages: Array<Messages> = new Array()
   protocol = protocols
-  focussedMessage = new Messages('', '')
+  focussedMessage = new ShowedMessage('', '')
   proto: ProtoInfo = new ProtoInfo('', '', '', '')
   currentIndex: number
   publishingMessage: string
@@ -200,9 +201,7 @@ export class MqttClientComponent implements OnInit {
     this.showSnackBar(`Subscribed to topic ${this.subscribeTo.topics}.`)
     client.subscribe(this.subscribeTo.topics)
     .on('message', function (topic, message) {
-      const mess: Messages = new Messages('', '')
-      mess.topic = topic.toString()
-      mess.message = message.toString()
+      const mess: Messages = new Messages(message, topic.toString())
       self.messages = [...self.messages, mess]
       self.cd.detectChanges()
     })
@@ -253,8 +252,8 @@ export class MqttClientComponent implements OnInit {
 
   toHex() {
     let result = ''
-    for (let i = 0; i < this.messages[this.currentIndex].message.length; i++) {
-      result  += '000' + this.messages[ this.currentIndex].message.charCodeAt(i).toString(16).slice(-4) + ' '
+    for (let i = 0; i < this.messages[this.currentIndex].message.toString().length; i++) {
+      result  += '000' + this.messages[ this.currentIndex].message[i].toString(16).slice(-4) + ' '
       if ( i % 15 === 0 ) {
         result += '\n'
       }
@@ -263,12 +262,23 @@ export class MqttClientComponent implements OnInit {
     this.showSnackBar('Message converted to HEX.')
   }
 
+  fromHexToString(hex) {
+
+    let result
+
+    for (let j = 0; j < hex.length; j++) {
+        result += String.fromCharCode(parseInt(hex[j], 16))
+    }
+
+    return result
+  }
+
   // ======================================================================= //
   //                Convert the proto message to string                      //
   // ======================================================================= //
 
   toStrings() {
-    this.focussedMessage.message = this.messages[this.currentIndex].message
+    this.focussedMessage.message = this.messages[this.currentIndex].message.toString()
     this.showSnackBar('Message converted to STRING.')
   }
 
@@ -285,15 +295,15 @@ export class MqttClientComponent implements OnInit {
       return result
     }
 
-    pbRoot.load(this.proto.protoBuffFile, function(err, root) {
+    pbRoot.load(this.proto.protoBuffFile, { keepCase: true }, function(err, root) {
       if (err) {
         console.log(err)
         self.showSnackBar('Failed to convert message to JSON.')
         throw err
       } else {
         const MyMessage = root.lookupType(self.proto.protoBuffPackage + '.' + self.proto.protoBuffMessage)
-        const array: Uint8Array = Buffer.from(self.messages[self.currentIndex].message, 'utf8').slice()
-        console.log('Array', array)
+        const array: Uint8Array = self.messages[self.currentIndex].message.slice()
+        console.log('Array', array.join(', '))
         self.focussedMessage.message = JSON.stringify(MyMessage.decode(array), null, '\t')
         self.showSnackBar('Message converted to JSON.')
       }
@@ -351,7 +361,7 @@ export class MqttClientComponent implements OnInit {
   // ======================================================================= //
 
   removeMessage() {
-    this.focussedMessage = new Messages('', '')
+    this.focussedMessage = new ShowedMessage('', '')
   }
 
 
@@ -363,7 +373,7 @@ export class MqttClientComponent implements OnInit {
       return result
     }
 
-    pbRoot.load(this.proto.protoBuffFile, function(err, root) {
+    pbRoot.load(this.proto.protoBuffFile, { keepCase: true }, function(err, root) {
       if (err) {
         console.log(err)
         self.showSnackBar('Failed to convert message to JSON.')
@@ -376,6 +386,43 @@ export class MqttClientComponent implements OnInit {
         self.showSnackBar('Message published on MQTT.')
       }
     })
+  }
+
+  publishHex() {
+    client.publish(this.subscribeTo.topics[0], this.fromHexToString(this.publishingMessage), this.publishingQos ? this.publishingQos : '0')
+    this.showSnackBar('Message published on MQTT.')
+  }
+
+  publishString() {
+    client.publish(this.subscribeTo.topics[0], this.publishingMessage, this.publishingQos ? this.publishingQos : '0')
+    this.showSnackBar('Message published on MQTT.')
+  }
+
+  copyMessage(text: string) {
+    const textArea = document.createElement('textarea')
+    textArea.style.position = 'fixed';
+    textArea.style.top = '0';
+    textArea.style.left = '0';
+    textArea.style.width = '2em';
+    textArea.style.height = '2em';
+    textArea.style.padding = '0';
+    textArea.style.border = 'none';
+    textArea.style.outline = 'none';
+    textArea.style.boxShadow = 'none';
+    textArea.style.background = 'transparent';
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+      const successful = document.execCommand('copy');
+      const msg = successful ? 'successful' : 'unsuccessful';
+      console.log('Copying text command was ' + msg);
+      this.showSnackBar('Message copied on clipboard ' + msg)
+    } catch (err) {
+      this.showSnackBar('Oops, unable to copy')
+      console.log('Oops, unable to copy');
+    }
+    document.body.removeChild(textArea);
   }
 
   ngOnInit() {

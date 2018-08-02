@@ -1,6 +1,6 @@
 export class Messages {
     constructor(
-        public message: string,
+        public message: Buffer,
         public topic: string
     ) { }
 }

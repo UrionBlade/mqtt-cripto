@@ -4,6 +4,5 @@ export class ProtoInfo {
         public protoBuffFile: string,
         public protoBuffPackage: string,
         public protoBuffMessage: string
-    ) {
-    }
+    ) {}
 }
