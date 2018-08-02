@@ -50,7 +50,7 @@ export class MqttClientComponent implements OnInit {
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   // ======================================================================= //
-  //             This method trigger auto resize of text area                //
+  //          This method trigger auto resizes of the text area.             //
   // ======================================================================= //
 
   triggerResize() {
@@ -60,15 +60,15 @@ export class MqttClientComponent implements OnInit {
   }
 
   // ======================================================================= //
-  //               Show snackbar on the bottom of the page                   //
+  //              Show snackbar on the bottom of the page.                   //
   // ======================================================================= //
 
-  showSnackBar(message: string)  {
+  showSnackBar(message: string, action?: string)  {
     const config = new MatSnackBarConfig()
     config.panelClass = ['snack-bar-container']
     config.duration = 3000
     config.verticalPosition = 'top'
-    this.snackBar.open(message, null, config)
+    this.snackBar.open(message, action, config)
   }
 
   // ======================================================================= //
@@ -120,7 +120,7 @@ export class MqttClientComponent implements OnInit {
   }
 
   // ======================================================================= //
-  //               Connect to the broker using selected protocol             //
+  //            Connect to the broker using the selected protocol.           //
   // ======================================================================= //
 
   connectBroker() {
@@ -141,7 +141,7 @@ export class MqttClientComponent implements OnInit {
   }
 
   // ======================================================================= //
-  //            Disconnect to the broker when user click on button           //
+  //        Disconnect to the broker when the user clicks on a button.       //
   // ======================================================================= //
 
   disconnectBroker() {
@@ -151,7 +151,7 @@ export class MqttClientComponent implements OnInit {
   }
 
   // ======================================================================= //
-  //         Save topic into JSON file when user click 'Save' button         //
+  //     Save topic into JSON file when the user clicks the'Save' button.    //
   // ======================================================================= //
 
   saveTopic() {
@@ -173,7 +173,7 @@ export class MqttClientComponent implements OnInit {
   }
 
   // ======================================================================= //
-  //       Delete topic into JSON file when user click 'Delete' button       //
+  //       Delete topic into JSON file when user click 'Delete' button.      //
   // ======================================================================= //
 
   deleteTopic() {
@@ -196,7 +196,7 @@ export class MqttClientComponent implements OnInit {
   }
 
   // ======================================================================= //
-  //       Subscribe to a topic when user click 'Subscribe' button.          //
+  //    Subscribe to a topic when the user clicks the 'Subscribe' button.    //
   // ======================================================================= //
 
   subscribeTopic() {
@@ -227,7 +227,7 @@ export class MqttClientComponent implements OnInit {
   }
 
   // ======================================================================= //
-  //        Clear message buffer when user click on 'Clear' button.          //
+  //      Clear message buffer when the user clicks on 'Clear' button.       //
   //             Once you clear buffer, you lose all messages                //
   // ======================================================================= //
 
@@ -238,8 +238,8 @@ export class MqttClientComponent implements OnInit {
   }
 
   // ======================================================================= //
-  //          When user click on the topic into the topic list,              //
-  //               on the message card, the message appear.                  //
+  //         When the user clicks on the topic into the topic list,          //
+  //               on the message card, the message appears.                 //
   // ======================================================================= //
 
   openMessage( index: number) {
@@ -279,7 +279,7 @@ export class MqttClientComponent implements OnInit {
   }
 
   // ======================================================================= //
-  //                Convert the proto message to string                      //
+  //               Convert the proto message to a string                     //
   // ======================================================================= //
 
   toStrings() {
@@ -288,7 +288,7 @@ export class MqttClientComponent implements OnInit {
   }
 
   // ======================================================================= //
-  //                 Convert the proto message to json                       //
+  //                 Convert the proto message to JSON.                      //
   // ======================================================================= //
 
   toJson() {
@@ -321,7 +321,7 @@ export class MqttClientComponent implements OnInit {
   }
 
   // ======================================================================= //
-  //                    Save proto info into a json file                     //
+  //                    Save proto info into a JSON file.                    //
   // ======================================================================= //
 
   saveProto() {
@@ -343,7 +343,7 @@ export class MqttClientComponent implements OnInit {
   }
 
   // ======================================================================= //
-  //                    Save proto info into a json file                     //
+  //                  Delete proto info into a JSON file.                    //
   // ======================================================================= //
 
   deleteProto() {
@@ -366,8 +366,8 @@ export class MqttClientComponent implements OnInit {
   }
 
   // ======================================================================= //
-  //         When user click the button 'Remove' on message Card,            //
-  //                         the message disappear.                          //
+  //       When the user clicks the button 'Remove' on message Card,         //
+  //                        the message disappears.                          //
   // ======================================================================= //
 
   removeMessage() {
@@ -375,7 +375,7 @@ export class MqttClientComponent implements OnInit {
   }
 
   // ======================================================================= //
-  //                 Publish a message as protobuf message                   //
+  //                 Publish a message as a protobuf message.                //
   // ======================================================================= //
 
   publish() {
@@ -403,7 +403,7 @@ export class MqttClientComponent implements OnInit {
   }
 
   // ======================================================================= //
-  //                   Publish a message as hex message                      //
+  //                  Publish a message as a hex message.                    //
   // ======================================================================= //
 
   publishHex() {
@@ -412,7 +412,7 @@ export class MqttClientComponent implements OnInit {
   }
 
   // ======================================================================= //
-  //                  Publish a message as string message                    //
+  //                 Publish a message as a string message.                  //
   // ======================================================================= //
 
   publishString() {
@@ -452,7 +452,7 @@ export class MqttClientComponent implements OnInit {
   }
 
   // ======================================================================= //
-  //                   Clear the content of the textarea                     //
+  //                  Clear the content of the text area.                    //
   // ======================================================================= //
 
   cleanTextArea() {

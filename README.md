@@ -39,20 +39,20 @@ npm run electron:mac
 
 # How to
 
-You can use Mqtt Cripto to subscribe or publish on your mqtt broker.
+You can use Mqtt Cripto to subscribe or publish on your MQTT broker.
 
 ## Broker Configuration
 
-![Mqtt Configuration](./src/assets/images/mqtt-configuration.jpg)
+![MQTT Configuration](./src/assets/images/mqtt-configuration.jpg)
 
 - Insert your broker configuration and click on 'Connect'.
-- Click on 'Disconnect' to disconnect from broker.
+- Click on 'Disconnect' to disconnect from the broker.
 - You can also 'Save' and 'Delete' the current configuration using buttons.
 
 ![Subscription](./src/assets/images/subscription.jpg)
 
-- Insert the topic where you want to subscribe and click on 'Subscribe'.
-- You can save your topic simply clicking on 'Save' button.
+- Insert the topic where you want to subscribe to and click on 'Subscribe'.
+- You can save your topic by clicking on the 'Save' button.
 - When you are subscribed and you wanna clear the message buffer click on 'Clear'.
 - As below, you can 'Unsubscribe' and 'Delete' your topic.
 - Click a topic into the list to show more information.
@@ -64,8 +64,8 @@ You can use Mqtt Cripto to subscribe or publish on your mqtt broker.
 - If you click on 'Save' all the protobuf information will be saved.
 - If you click on 'Clear' the focussed message will be removed.
 - If you click on 'Delete' all the protobuff information will be removed.
-- If you click on 'Hex' the message will be convert into hex format (default).
-- If you click on 'String' the message will be convert into string format.
+- If you click on 'Hex' the message will be converted into hex format (default).
+- If you click on 'String' the message will be converted into string format.
 - If you click on 'JSON' and you have inserted protobuf information, the message will be converted in JSON.
 - If you click on 'Copy' the message will be copied to the clipboard.
 
@@ -74,4 +74,4 @@ You can use Mqtt Cripto to subscribe or publish on your mqtt broker.
 - Insert into the input boxes your protobuf information. The application needs to know the path of the root file, the name file, the package and the message name.
 - Write the message ( you can write the message as String, Hex or Json ).
 - You can publish the message on the broker in string, hex or protobuf format.
-- You can clear all the content of the text area clicking on 'Clear'.
+- You can clear all the content of the text area by clicking on 'Clear'.
