@@ -254,9 +254,6 @@ export class MqttClientComponent implements OnInit {
     let result = ''
     for (let i = 0; i < this.messages[this.currentIndex].message.toString().length; i++) {
       result  += '000' + this.messages[ this.currentIndex].message[i].toString(16).slice(-4) + ' '
-      if ( i % 15 === 0 ) {
-        result += '\n'
-      }
     }
     this.focussedMessage.message = result.toUpperCase()
     this.showSnackBar('Message converted to HEX.')
@@ -297,15 +294,20 @@ export class MqttClientComponent implements OnInit {
 
     pbRoot.load(this.proto.protoBuffFile, { keepCase: true }, function(err, root) {
       if (err) {
-        console.log(err)
         self.showSnackBar('Failed to convert message to JSON.')
+        console.log(err)
         throw err
       } else {
-        const MyMessage = root.lookupType(self.proto.protoBuffPackage + '.' + self.proto.protoBuffMessage)
+        const myMessage = root.lookupType(self.proto.protoBuffPackage + '.' + self.proto.protoBuffMessage)
         const array: Uint8Array = self.messages[self.currentIndex].message.slice()
         console.log('Array', array.join(', '))
-        self.focussedMessage.message = JSON.stringify(MyMessage.decode(array), null, '\t')
-        self.showSnackBar('Message converted to JSON.')
+        const error = myMessage.verify(myMessage.decode(array))
+        if (error) {
+          self.showSnackBar('Cannot convert this message.')
+        } else {
+          self.focussedMessage.message = JSON.stringify(myMessage.decode(array), null, '\t')
+          self.showSnackBar('Message converted to JSON.')
+        }
       }
     })
   }
@@ -380,9 +382,10 @@ export class MqttClientComponent implements OnInit {
         throw err
       } else {
         const myMessage = root.lookupType(self.proto.protoBuffPackage + '.' + self.proto.protoBuffMessage)
-        const buffer = myMessage.encode(JSON.parse(self.publishingMessage)).finish()
-        console.log('Buffer: ', buffer)
-        client.publish(self.subscribeTo.topics[0], buffer, self.publishingQos ? self.publishingQos : '0')
+        const payload = myMessage.create(JSON.parse(self.publishingMessage))
+        const str = myMessage.encode(payload).finish()
+        console.log(str.join(' ,'))
+        client.publish(self.subscribeTo.topics[0], str, self.publishingQos ? self.publishingQos : '0')
         self.showSnackBar('Message published on MQTT.')
       }
     })
@@ -423,6 +426,11 @@ export class MqttClientComponent implements OnInit {
       console.log('Oops, unable to copy');
     }
     document.body.removeChild(textArea);
+  }
+
+  cleanTextArea() {
+    const elem = document.getElementById('publish-text-area') as HTMLInputElement;
+    elem.value = ''
   }
 
   ngOnInit() {

@@ -193,6 +193,7 @@
       <span class="buttons"> <button mat-raised-button matTooltip="Publish message" color="primary" (click)="publishingMessage ? publish() : showSnackBar('No message selected')">Publish as Proto</button></span>
       <span class="buttons"> <button mat-raised-button matTooltip="Publish message" color="primary" (click)="publishingMessage ? publishHex() : showSnackBar('No message selected')">Publish as Hex</button></span>
       <span class="buttons"> <button mat-raised-button matTooltip="Publish message" color="primary" (click)="publishingMessage ? publishString() : showSnackBar('No message selected')">Publish as String</button></span>
+      <span class="buttons"> <button mat-raised-button matTooltip="Clean text area" color="accent" (click)="cleanTextArea()">Clear</button></span>
       <mat-form-field class="form-field-text-area" appearance="outline">
         <mat-label>Write here your message</mat-label>
         <textarea matInput
@@ -200,6 +201,7 @@
                   #autosize="cdkTextareaAutosize"
                   cdkAutosizeMinRows="5"
                   class="textarea"
+                  id="publish-text-area"
                   [(ngModel)]="publishingMessage" 
                   formControlName="publishMessage"
           ></textarea>
