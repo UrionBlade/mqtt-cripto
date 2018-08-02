@@ -49,6 +49,10 @@ export class MqttClientComponent implements OnInit {
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
+  // ======================================================================= //
+  //             This method trigger auto resize of text area                //
+  // ======================================================================= //
+
   triggerResize() {
     // Wait for changes to be applied, then trigger textarea resize.
     this.ngZone.onStable.pipe(take(1))
@@ -56,7 +60,7 @@ export class MqttClientComponent implements OnInit {
   }
 
   // ======================================================================= //
-  //                Show snackbar on the bottom of the page                  //
+  //               Show snackbar on the bottom of the page                   //
   // ======================================================================= //
 
   showSnackBar(message: string)  {
@@ -68,7 +72,7 @@ export class MqttClientComponent implements OnInit {
   }
 
   // ======================================================================= //
-  //                Save broker configuration into JSON file.                //
+  //               Save broker configuration into JSON file.                 //
   // ======================================================================= //
 
   saveBrokerConfig() {
@@ -259,6 +263,10 @@ export class MqttClientComponent implements OnInit {
     this.showSnackBar('Message converted to HEX.')
   }
 
+  // ======================================================================= //
+  //                       Convert hex to a string                           //
+  // ======================================================================= //
+
   fromHexToString(hex) {
 
     let result
@@ -287,18 +295,18 @@ export class MqttClientComponent implements OnInit {
     const self = this
     const pbRoot = new Root()
     pbRoot.resolvePath = (origin: string, target: string) => {
-      const result = self.proto.protoBuffPath + '/' + target
+      const result = self.proto.protobufPath + '/' + target
       console.log('Result: ', result)
       return result
     }
 
-    pbRoot.load(this.proto.protoBuffFile, { keepCase: true }, function(err, root) {
+    pbRoot.load(this.proto.protobufFile, { keepCase: true }, function(err, root) {
       if (err) {
         self.showSnackBar('Failed to convert message to JSON.')
         console.log(err)
         throw err
       } else {
-        const myMessage = root.lookupType(self.proto.protoBuffPackage + '.' + self.proto.protoBuffMessage)
+        const myMessage = root.lookupType(self.proto.protobufPackage + '.' + self.proto.protobufMessage)
         const array: Uint8Array = self.messages[self.currentIndex].message.slice()
         console.log('Array', array.join(', '))
         const error = myMessage.verify(myMessage.decode(array))
@@ -366,22 +374,25 @@ export class MqttClientComponent implements OnInit {
     this.focussedMessage = new ShowedMessage('', '')
   }
 
+  // ======================================================================= //
+  //                 Publish a message as protobuf message                   //
+  // ======================================================================= //
 
   publish() {
     const self = this
     const pbRoot = new Root()
     pbRoot.resolvePath = (origin: string, target: string) => {
-      const result = self.proto.protoBuffPath + '/' + target
+      const result = self.proto.protobufPath + '/' + target
       return result
     }
 
-    pbRoot.load(this.proto.protoBuffFile, { keepCase: true }, function(err, root) {
+    pbRoot.load(this.proto.protobufFile, { keepCase: true }, function(err, root) {
       if (err) {
         console.log(err)
         self.showSnackBar('Failed to convert message to JSON.')
         throw err
       } else {
-        const myMessage = root.lookupType(self.proto.protoBuffPackage + '.' + self.proto.protoBuffMessage)
+        const myMessage = root.lookupType(self.proto.protobufPackage + '.' + self.proto.protobufMessage)
         const payload = myMessage.create(JSON.parse(self.publishingMessage))
         const str = myMessage.encode(payload).finish()
         console.log(str.join(' ,'))
@@ -391,15 +402,27 @@ export class MqttClientComponent implements OnInit {
     })
   }
 
+  // ======================================================================= //
+  //                   Publish a message as hex message                      //
+  // ======================================================================= //
+
   publishHex() {
     client.publish(this.subscribeTo.topics[0], this.fromHexToString(this.publishingMessage), this.publishingQos ? this.publishingQos : '0')
     this.showSnackBar('Message published on MQTT.')
   }
 
+  // ======================================================================= //
+  //                  Publish a message as string message                    //
+  // ======================================================================= //
+
   publishString() {
     client.publish(this.subscribeTo.topics[0], this.publishingMessage, this.publishingQos ? this.publishingQos : '0')
     this.showSnackBar('Message published on MQTT.')
   }
+
+  // ======================================================================= //
+  //          Copy the message into a <pre></pre> tag to the clipboard       //
+  // ======================================================================= //
 
   copyMessage(text: string) {
     const textArea = document.createElement('textarea')
@@ -427,6 +450,10 @@ export class MqttClientComponent implements OnInit {
     }
     document.body.removeChild(textArea);
   }
+
+  // ======================================================================= //
+  //                   Clear the content of the textarea                     //
+  // ======================================================================= //
 
   cleanTextArea() {
     const elem = document.getElementById('publish-text-area') as HTMLInputElement;
@@ -498,8 +525,8 @@ export class MqttClientComponent implements OnInit {
     })
 
     this.protoForm = this._formBuilder.group({
-      protoBuffPath:      this._formBuilder.control,
-      protoBuffFile:      this._formBuilder.control,
+      protobufPath:      this._formBuilder.control,
+      protobufFile:      this._formBuilder.control,
       protoPackage:       this._formBuilder.control,
       protoMessage:       this._formBuilder.control
     })

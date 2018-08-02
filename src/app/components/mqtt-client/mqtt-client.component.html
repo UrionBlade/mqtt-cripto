@@ -105,22 +105,22 @@
 
     <form [formGroup]="protoForm">
       <mat-form-field class="form-field">
-        <input matInput placeholder="Proto Buff Path" [(ngModel)]="proto.protoBuffPath" formControlName="protoBuffPath"/>
+        <input matInput placeholder="Protobuf Path" [(ngModel)]="proto.protobufPath" formControlName="protobufPath"/>
         <mat-hint>Insert here the path where proto files are</mat-hint> 
       </mat-form-field>
 
       <mat-form-field class="form-field">
-        <input matInput placeholder="Proto Buff File Name" [(ngModel)]="proto.protoBuffFile" formControlName="protoBuffFile"/>
+        <input matInput placeholder="Protobuf File Name" [(ngModel)]="proto.protobufFile" formControlName="protobufFile"/>
         <mat-hint>Insert here the proto file name</mat-hint> 
       </mat-form-field>
 
       <mat-form-field class="form-field">
-          <input matInput placeholder="Proto Buff Package" [(ngModel)]="proto.protoBuffPackage" formControlName="protoPackage"/>
+          <input matInput placeholder="Protobuf Package" [(ngModel)]="proto.protobufPackage" formControlName="protoPackage"/>
           <mat-hint>Insert here the package</mat-hint> 
         </mat-form-field>
   
         <mat-form-field class="form-field">
-          <input matInput placeholder="Proto Buff Message" [(ngModel)]="proto.protoBuffMessage" formControlName="protoMessage"/>
+          <input matInput placeholder="Protobuf Message" [(ngModel)]="proto.protobufMessage" formControlName="protoMessage"/>
           <mat-hint>Insert here the proto message type</mat-hint> 
         </mat-form-field>
     </form>
@@ -153,22 +153,22 @@
     </mat-card-subtitle>
     <form [formGroup]="publishForm">
       <mat-form-field class="form-field">
-        <input matInput placeholder="Proto Buff Path" [(ngModel)]="proto.protoBuffPath" formControlName="publishProtoPath"/>
+        <input matInput placeholder="Protobuf Path" [(ngModel)]="proto.protobufPath" formControlName="publishProtoPath"/>
         <mat-hint>Insert here the path where proto files are</mat-hint> 
       </mat-form-field>
 
       <mat-form-field class="form-field">
-        <input matInput placeholder="Proto Buff File Name" [(ngModel)]="proto.protoBuffFile" formControlName="publishProtoFile"/>
+        <input matInput placeholder="Protobuf File Name" [(ngModel)]="proto.protobufFile" formControlName="publishProtoFile"/>
         <mat-hint>Insert here the proto file name</mat-hint> 
       </mat-form-field>
 
       <mat-form-field class="form-field">
-        <input matInput placeholder="Proto Buff Package" [(ngModel)]="proto.protoBuffPackage" formControlName="publishProtoPack"/>
+        <input matInput placeholder="Protobuf Package" [(ngModel)]="proto.protobufPackage" formControlName="publishProtoPack"/>
         <mat-hint>Insert here the package</mat-hint> 
       </mat-form-field>
 
       <mat-form-field class="form-field">
-        <input matInput placeholder="Proto Buff Message" [(ngModel)]="proto.protoBuffMessage" formControlName="publishProtoMess"/>
+        <input matInput placeholder="Protobuf Message" [(ngModel)]="proto.protobufMessage" formControlName="publishProtoMess"/>
         <mat-hint>Insert here the proto message type</mat-hint> 
       </mat-form-field>
 
@@ -205,7 +205,7 @@
                   [(ngModel)]="publishingMessage" 
                   formControlName="publishMessage"
           ></textarea>
-        <mat-hint>Insert Message to publish</mat-hint> 
+        <mat-hint>Insert Message to publish. Remember, if you are using an enum, insert the index of the value.</mat-hint> 
       </mat-form-field>
     </form>
   </mat-card-content>
