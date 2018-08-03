@@ -52,8 +52,9 @@ import {
     MatInputModule,
     MatTooltipModule
 } from '@angular/material';
+import {MatDialogModule} from '@angular/material/dialog';
 import { AppComponent } from './app.component'
-import { MqttClientComponent } from './components/mqtt-client/mqtt-client.component'
+import { MqttClientComponent, DialogComponent } from './components/mqtt-client/mqtt-client.component'
 import { HeaderComponent } from './components/header/header.component'
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -111,9 +112,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     HeaderComponent,
     MqttClientComponent,
     WebviewDirective,
+    DialogComponent
   ],
+  entryComponents: [DialogComponent],
   imports: [
     BrowserAnimationsModule,
+    MatDialogModule,
     BrowserModule,
     FormsModule,
     materialModules,

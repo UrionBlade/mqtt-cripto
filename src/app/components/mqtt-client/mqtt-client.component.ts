@@ -10,15 +10,14 @@ import { Messages } from '../model/messages'
 import { ShowedMessage } from '../model/showed-message'
 import { ProtoInfo } from '../model/protoInfo'
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material'
-import {take} from 'rxjs/operators'
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
+import { take } from 'rxjs/operators'
 
 const storage = require('electron-storage')
 const mqtt = require('mqtt')
 const path = require('path')
 const dataPath = 'data/'
-const mqttConfig = 'mqttConfig.json'
-const topicFile = 'topics.json'
-const protoFile = 'proto.json'
+
 let client
 
 @Component({
@@ -44,10 +43,55 @@ export class MqttClientComponent implements OnInit {
   currentIndex: number
   publishingMessage: string
   publishingQos: number
+  mqttConfig = 'mqttConfig.json'
+  topicFile = 'topics.json'
+  protoFile = 'proto.json'
 
-  constructor(private _formBuilder: FormBuilder, private cd: ChangeDetectorRef, public snackBar: MatSnackBar, private ngZone: NgZone) { }
+  constructor(
+    private _formBuilder: FormBuilder,
+    private cd: ChangeDetectorRef,
+    public snackBar: MatSnackBar,
+    private ngZone: NgZone,
+    private dialog: MatDialog
+  ) { }
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
+
+  // ======================================================================= //
+  //    This method will open the material dialog in order to confirm to     //
+  //                        delete the configuration.                        //
+  // ======================================================================= //
+
+  openDialog(file: string) {
+    const dialogRef = this.dialog.open(
+        DialogComponent, {
+            width: '40%',
+            minHeight: '100px'
+        }
+    );
+
+    dialogRef.afterClosed().subscribe(result => {
+      switch ( file ) {
+        case this.mqttConfig: {
+          if ( result ) {
+            this.deleteBrokerConfig()
+          }
+          break;
+        }
+        case this.topicFile: {
+          if ( result ) {
+            this.deleteTopic()
+          }
+          break;
+        }
+        case this.protoFile: {
+          if ( result ) {
+            this.deleteProto()
+          }
+        }
+      }
+    });
+  }
 
   // ======================================================================= //
   //          This method trigger auto resizes of the text area.             //
@@ -77,11 +121,11 @@ export class MqttClientComponent implements OnInit {
 
   saveBrokerConfig() {
     console.log(this.broker)
-    storage.remove(dataPath + mqttConfig).then( err => {
+    storage.remove(dataPath + this.mqttConfig).then( err => {
         if (err) {
           console.error(err)
         } else {
-          storage.set(dataPath + mqttConfig, this.broker, ( error ) => {
+          storage.set(dataPath + this.mqttConfig, this.broker, ( error ) => {
             if (error) {
               console.error(error)
               this.showSnackBar('Can\'t save your configuration.')
@@ -99,10 +143,10 @@ export class MqttClientComponent implements OnInit {
   // ======================================================================= //
 
   deleteBrokerConfig() {
-    storage.isPathExists(dataPath + mqttConfig)
+    storage.isPathExists(dataPath + this.mqttConfig)
     .then(itDoes => {
       if (itDoes) {
-        storage.remove(dataPath + mqttConfig).then( err => {
+        storage.remove(dataPath + this.mqttConfig).then( err => {
             if (err) {
               console.error(err)
               this.showSnackBar('Can\'t delete broker config file.')
@@ -155,11 +199,11 @@ export class MqttClientComponent implements OnInit {
   // ======================================================================= //
 
   saveTopic() {
-    storage.remove(dataPath + topicFile).then( err => {
+    storage.remove(dataPath + this.topicFile).then( err => {
         if (err) {
           console.error(err)
         } else {
-          storage.set(dataPath + topicFile, this.subscribeTo, (error) => {
+          storage.set(dataPath + this.topicFile, this.subscribeTo, (error) => {
             if (error) {
               console.error(error)
               this.showSnackBar('Can\'t save topic.')
@@ -177,10 +221,10 @@ export class MqttClientComponent implements OnInit {
   // ======================================================================= //
 
   deleteTopic() {
-    storage.isPathExists(dataPath + topicFile)
+    storage.isPathExists(dataPath + this.topicFile)
     .then(itDoes => {
       if (itDoes) {
-        storage.remove(dataPath + topicFile).then( err => {
+        storage.remove(dataPath + this.topicFile).then( err => {
             if (err) {
               console.error(err)
               this.showSnackBar('Can\'t delete topic file.')
@@ -325,11 +369,11 @@ export class MqttClientComponent implements OnInit {
   // ======================================================================= //
 
   saveProto() {
-    storage.remove(dataPath + protoFile).then( err => {
+    storage.remove(dataPath + this.protoFile).then( err => {
         if (err) {
           console.error(err)
         } else {
-          storage.set(dataPath + protoFile, this.proto, (error) => {
+          storage.set(dataPath + this.protoFile, this.proto, (error) => {
             if (error) {
               this.showSnackBar('Can\'t save proto info.')
               console.error(error)
@@ -347,10 +391,10 @@ export class MqttClientComponent implements OnInit {
   // ======================================================================= //
 
   deleteProto() {
-    storage.isPathExists(dataPath + protoFile)
+    storage.isPathExists(dataPath + this.protoFile)
     .then(itDoes => {
       if (itDoes) {
-        storage.remove(dataPath + protoFile).then( err => {
+        storage.remove(dataPath + this.protoFile).then( err => {
             if (err) {
               console.error(err)
               this.showSnackBar('Can\'t delete proto info.')
@@ -462,10 +506,10 @@ export class MqttClientComponent implements OnInit {
 
   ngOnInit() {
 
-    storage.isPathExists(dataPath + mqttConfig)
+    storage.isPathExists(dataPath + this.mqttConfig)
       .then(itDoes => {
         if (itDoes) {
-          storage.get(dataPath + mqttConfig)
+          storage.get(dataPath + this.mqttConfig)
             .then(data => {
               this.broker.brokerAddress   = data.brokerAddress
               this.broker.brokerPassword  = data.brokerPassword
@@ -482,10 +526,10 @@ export class MqttClientComponent implements OnInit {
         }
     })
 
-    storage.isPathExists(dataPath + topicFile)
+    storage.isPathExists(dataPath + this.topicFile)
       .then(itDoes => {
         if (itDoes) {
-          storage.get(dataPath + topicFile)
+          storage.get(dataPath + this.topicFile)
             .then(data => {
               this.subscribeTo.topics = data.topics
               this.cd.detectChanges()
@@ -496,10 +540,10 @@ export class MqttClientComponent implements OnInit {
         }
     })
 
-    storage.isPathExists(dataPath + protoFile)
+    storage.isPathExists(dataPath + this.protoFile)
     .then(itDoes => {
       if (itDoes) {
-        storage.get(dataPath + protoFile)
+        storage.get(dataPath + this.protoFile)
           .then(data => {
             this.proto = data
             this.cd.detectChanges()
@@ -544,3 +588,21 @@ export class MqttClientComponent implements OnInit {
   }
 
 }
+
+@Component({
+  selector: 'app-confirm-dialog',
+  templateUrl: './confirm-dialog.component.html',
+  styleUrls: ['./confirm-dialog.component.scss'],
+  entryComponents: [
+    MqttClientComponent
+  ]
+})
+
+export class DialogComponent {
+  constructor(public dialogRef: MatDialogRef<DialogComponent>) { }
+
+  onNoClick(): void {
+      this.dialogRef.close();
+    }
+}
+

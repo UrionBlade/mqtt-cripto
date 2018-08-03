@@ -1,0 +1,8 @@
+<h1 mat-dialog-title> Are you sure you want delete this configuration?</h1>
+<div mat-dialog-content>
+
+</div>
+<div mat-dialog-actions class="actions">
+  <button mat-raised-button matTooltip="Don't remove the configuration" [mat-dialog-close]="false" color="primary" (click)="onNoClick()" cdkFocusInitial>No</button>
+  <button mat-raised-button matTooltip="Remove the configuration" color="warn" [mat-dialog-close]="true">Yes</button>
+</div>
