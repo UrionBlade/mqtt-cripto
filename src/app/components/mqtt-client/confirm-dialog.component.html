@@ -3,6 +3,6 @@
 
 </div>
 <div mat-dialog-actions class="actions">
-  <button mat-raised-button matTooltip="Don't remove the configuration" [mat-dialog-close]="false" color="primary" (click)="onNoClick()" cdkFocusInitial>No</button>
-  <button mat-raised-button matTooltip="Remove the configuration" color="warn" [mat-dialog-close]="true">Yes</button>
+  <button mat-raised-button matTooltip="Don't remove the configuration" [mat-dialog-close]="false" color="primary" (click)="onNoClick()" cdkFocusInitial><mat-icon class="icon-text" fontSet="far" fontIcon="fa-thumbs-down"></mat-icon>No</button>
+  <button mat-raised-button matTooltip="Remove the configuration" color="warn" [mat-dialog-close]="true"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-thumbs-up"></mat-icon>Yes</button>
 </div>

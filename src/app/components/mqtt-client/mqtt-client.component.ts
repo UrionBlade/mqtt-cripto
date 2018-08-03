@@ -65,7 +65,7 @@ export class MqttClientComponent implements OnInit {
   openDialog(file: string) {
     const dialogRef = this.dialog.open(
         DialogComponent, {
-            width: '40%',
+            width: '30%',
             minHeight: '100px'
         }
     );
