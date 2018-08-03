@@ -12,6 +12,8 @@ import { ProtoInfo } from '../model/protoInfo'
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { take } from 'rxjs/operators'
+import {DomSanitizer} from '@angular/platform-browser'
+import {MatIconRegistry} from '@angular/material'
 
 const storage = require('electron-storage')
 const mqtt = require('mqtt')
@@ -52,9 +54,7 @@ export class MqttClientComponent implements OnInit {
     private cd: ChangeDetectorRef,
     public snackBar: MatSnackBar,
     private ngZone: NgZone,
-    private dialog: MatDialog
-  ) { }
-
+    private dialog: MatDialog) { }
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   // ======================================================================= //
@@ -605,4 +605,3 @@ export class DialogComponent {
       this.dialogRef.close();
     }
 }
-

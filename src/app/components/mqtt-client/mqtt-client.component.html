@@ -49,10 +49,10 @@
     </form>
   </mat-card-content>
   <mat-card-actions>
-   <span  class="buttons"> <button mat-raised-button matTooltip="Save broker config" color="primary" (click)="saveBrokerConfig()">Save</button></span>
-   <span  class="buttons"> <button mat-raised-button matTooltip="Connect to the broker server" color="primary" (click)="connectBroker()">Connect</button></span>
-   <span  class="buttons"> <button mat-raised-button matTooltip="Disconnect from the broker server" color="warn" (click)="disconnectBroker()">Disconnect</button></span>
-   <span  class="buttons"> <button mat-raised-button matTooltip="Delete saved broker configuration" color="warn" (click)="openDialog(mqttConfig)">Delete</button></span>
+   <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Save broker config" color="primary" (click)="saveBrokerConfig()"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-save"></mat-icon>Save</button></span>
+   <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Connect to the broker server" color="primary" (click)="connectBroker()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-play"></mat-icon>Connect</button></span>
+   <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Disconnect from the broker server" color="warn" (click)="disconnectBroker()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-stop"></mat-icon>Disconnect</button></span>
+   <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Delete saved broker configuration" color="warn" (click)="openDialog(mqttConfig)"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-trash-alt"></mat-icon>Delete</button></span>
   </mat-card-actions>
 </mat-card>
 <mat-card class="card">
@@ -72,17 +72,17 @@
       
     </span>
     <mat-card-actions>
-     <span  class="buttons"> <button mat-raised-button matTooltip="Save topic" color="primary" (click)="saveTopic()">Save</button></span>
-     <span  class="buttons"> <button mat-raised-button matTooltip="Subscribe to the selected topic" color="primary" (click)="subscribeTopic()" (click)="drawer.open()">Subscribe</button></span>
-     <span  class="buttons"> <button mat-raised-button matTooltip="Clear proto buffer" color="primary" (click)="clearBuffer()">Clear</button></span>
-     <span  class="buttons"> <button mat-raised-button matTooltip="Unsubscribe from selected topic" color="warn" (click)="unsubscribeTopic()" (click)="drawer.close()">Unsubscribe</button></span>
-     <span  class="buttons"> <button mat-raised-button matTooltip="Delete saved topic" color="warn" (click)="openDialog(topicFile)">Delete</button></span>
+     <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Save topic" color="primary" (click)="saveTopic()"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-save"></mat-icon>Save</button></span>
+     <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Subscribe to the selected topic" color="primary" (click)="subscribeTopic()" (click)="drawer.open()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-sign-in-alt"></mat-icon>Subscribe</button></span>
+     <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Clear proto buffer" color="primary" (click)="clearBuffer()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-eraser"></mat-icon>Clear</button></span>
+     <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Unsubscribe from selected topic" color="warn" (click)="unsubscribeTopic()" (click)="drawer.close()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-sign-out-alt"></mat-icon>Unsubscribe</button></span>
+     <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Delete saved topic" color="warn" (click)="openDialog(topicFile)"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-trash-alt"></mat-icon>Delete</button></span>
       <mat-drawer-container class="example-container">
         <mat-drawer class="drawer" #drawer>
           <perfect-scrollbar>      
             <mat-list>
               <mat-list-item  *ngFor="let message of messages; let in = index">
-              <span  class="buttons"> <button mat-button class="topic" (click)="openMessage(in)">{{ in }} :   {{ message.topic }} </button></span>
+              <span  class="buttons"> <button class="btn-cripto" mat-button class="topic" (click)="openMessage(in)"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-envelope"></mat-icon>{{ in }} :   {{ message.topic }} </button></span>
               </mat-list-item>
             </mat-list>
           </perfect-scrollbar>
@@ -133,13 +133,13 @@
     </span>
   </mat-card-content>
   <mat-card-actions>
-    <span class="buttons"> <button mat-raised-button matTooltip="Save proto info" color="primary" (click)="saveProto()">Save</button></span>
-    <span class="buttons"> <button mat-raised-button matTooltip="Clear selected message" color="primary" (click)="removeMessage()">Clear</button></span>
-    <span class="buttons"> <button mat-raised-button matTooltip="Delete saved proto info" color="warn" (click)="openDialog(protoFile)">Delete</button></span>
-    <span class="buttons"> <button mat-raised-button matTooltip="Convert to Hex proto message" color="accent" (click)="toHex()">Hex</button></span>
-    <span class="buttons"> <button mat-raised-button matTooltip="Convert to string proto message" color="accent" (click)="toStrings()">String</button></span>
-    <span class="buttons"> <button mat-raised-button matTooltip="Convert to json proto message" color="accent" (click)="toJson()">Json</button></span>
-    <span class="buttons"> <button mat-raised-button matTooltip="Copy message to clipboard" color="accent" (click)="copyMessage(focussedMessage.message)">Copy</button></span>
+    <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Save proto info" color="primary" (click)="saveProto()"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-save"></mat-icon>Save</button></span>
+    <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Clear selected message" color="primary" (click)="removeMessage()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-eraser"></mat-icon>Clear</button></span>
+    <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Delete saved proto info" color="warn" (click)="openDialog(protoFile)"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-trash-alt"></mat-icon>Delete</button></span>
+    <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Convert to Hex proto message" color="accent" (click)="toHex()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-exchange-alt"></mat-icon>Hex</button></span>
+    <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Convert to string proto message" color="accent" (click)="toStrings()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-exchange-alt"></mat-icon>String</button></span>
+    <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Convert to json proto message" color="accent" (click)="toJson()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-exchange-alt"></mat-icon>Json</button></span>
+    <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Copy message to clipboard" color="accent" (click)="copyMessage(focussedMessage.message)"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-copy"></mat-icon>Copy</button></span>
   </mat-card-actions>
 </mat-card>
 
@@ -190,10 +190,10 @@
           </mat-select>
           <mat-hint>Insert QoS type. If no one selected, default is 0</mat-hint> 
         </mat-form-field>
-      <span class="buttons"> <button mat-raised-button matTooltip="Publish message" color="primary" (click)="publishingMessage ? publish() : showSnackBar('No message selected')">Publish as Proto</button></span>
-      <span class="buttons"> <button mat-raised-button matTooltip="Publish message" color="primary" (click)="publishingMessage ? publishHex() : showSnackBar('No message selected')">Publish as Hex</button></span>
-      <span class="buttons"> <button mat-raised-button matTooltip="Publish message" color="primary" (click)="publishingMessage ? publishString() : showSnackBar('No message selected')">Publish as String</button></span>
-      <span class="buttons"> <button mat-raised-button matTooltip="Clean text area" color="accent" (click)="cleanTextArea()">Clear</button></span>
+      <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Publish message" color="primary" (click)="publishingMessage ? publish() : showSnackBar('No message selected')"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-share-square"></mat-icon>Publish as Proto</button></span>
+      <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Publish message" color="primary" (click)="publishingMessage ? publishHex() : showSnackBar('No message selected')"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-share-square"></mat-icon>Publish as Hex</button></span>
+      <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Publish message" color="primary" (click)="publishingMessage ? publishString() : showSnackBar('No message selected')"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-share-square"></mat-icon>Publish as String</button></span>
+      <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Clean text area" color="accent" (click)="cleanTextArea()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-eraser"></mat-icon>Clear</button></span>
       <mat-form-field class="form-field-text-area" appearance="outline">
         <mat-label>Write here your message</mat-label>
         <textarea matInput
