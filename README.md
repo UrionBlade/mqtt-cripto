@@ -51,11 +51,11 @@ You can use Mqtt Cripto to subscribe or publish on your MQTT broker.
 
 ### Linux
 
-http://www.mediafire.com/file/kzpzioguu4hbn4q/Mqtt_Cripto_Linux_Version
+http://www.mediafire.com/file/7p2psgh7pbp5n2d/Mqtt_Critpo_Linux_Version
 
 ### Windows
 
-http://www.mediafire.com/file/romfb61s3pe10g6/Mqtt_Cripto_Windows_Version.exe/file
+http://www.mediafire.com/file/rdhe0cyaz6or5xv/Mqtt_Cripto_Windows_Version.exe/file
 
 <hr>
 
