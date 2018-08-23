@@ -43,6 +43,7 @@ export class MqttClientComponent implements OnInit {
   focussedMessage = new ShowedMessage('', '')
   proto: ProtoInfo = new ProtoInfo('', '', '', '')
   currentIndex: number
+  publishingTopic: string
   publishingMessage: string
   publishingQos: number
   mqttConfig = 'mqttConfig.json'
@@ -440,7 +441,7 @@ export class MqttClientComponent implements OnInit {
         const payload = myMessage.create(JSON.parse(self.publishingMessage))
         const str = myMessage.encode(payload).finish()
         console.log(str.join(' ,'))
-        client.publish(self.subscribeTo.topics[0], str, self.publishingQos ? self.publishingQos : '0')
+        client.publish(self.publishingTopic, str, self.publishingQos ? self.publishingQos : '0')
         self.showSnackBar('Message published on MQTT.')
       }
     })
@@ -451,7 +452,7 @@ export class MqttClientComponent implements OnInit {
   // ======================================================================= //
 
   publishHex() {
-    client.publish(this.subscribeTo.topics[0], this.fromHexToString(this.publishingMessage), this.publishingQos ? this.publishingQos : '0')
+    client.publish(this.publishingTopic, this.fromHexToString(this.publishingMessage), this.publishingQos ? this.publishingQos : '0')
     this.showSnackBar('Message published on MQTT.')
   }
 
@@ -460,7 +461,7 @@ export class MqttClientComponent implements OnInit {
   // ======================================================================= //
 
   publishString() {
-    client.publish(this.subscribeTo.topics[0], this.publishingMessage, this.publishingQos ? this.publishingQos : '0')
+    client.publish(this.publishingTopic, this.publishingMessage, this.publishingQos ? this.publishingQos : '0')
     this.showSnackBar('Message published on MQTT.')
   }
 
@@ -532,6 +533,7 @@ export class MqttClientComponent implements OnInit {
           storage.get(dataPath + this.topicFile)
             .then(data => {
               this.subscribeTo.topics = data.topics
+              this.publishingTopic = data.topics
               this.cd.detectChanges()
             })
             .catch(err => {
@@ -552,7 +554,7 @@ export class MqttClientComponent implements OnInit {
             console.error(err)
           })
       }
-  })
+    })
 
     this.configurationForm = this._formBuilder.group({
       mqttBrokerAddress:  this._formBuilder.control,
