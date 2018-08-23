@@ -1,5 +1,9 @@
 [![Angular Logo](./logo-angular.jpg)](https://angular.io/) [![Electron Logo](./logo-electron.jpg)](https://electron.atom.io/)
 
+# MQTT Cripto
+
+![MQTT Cripto](./src/favicon.256x256.png)
+
 # Getting Started
 
 Clone this repository locally :
@@ -41,6 +45,21 @@ npm run electron:mac
 
 You can use Mqtt Cripto to subscribe or publish on your MQTT broker.
 
+<hr>
+
+## Download
+
+### Linux
+
+http://www.mediafire.com/file/kzpzioguu4hbn4q/Mqtt_Cripto_Linux_Version
+
+### Windows
+
+http://www.mediafire.com/file/romfb61s3pe10g6/Mqtt_Cripto_Windows_Version.exe/file
+
+<hr>
+
+
 ## Broker Configuration
 
 ![MQTT Configuration](./src/assets/images/mqtt-configuration.jpg)
@@ -75,3 +94,4 @@ You can use Mqtt Cripto to subscribe or publish on your MQTT broker.
 - Write the message ( you can write the message as String, Hex or Json ).
 - You can publish the message on the broker in string, hex or protobuf format.
 - You can clear all the content of the text area by clicking on 'Clear'.
+
