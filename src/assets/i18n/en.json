@@ -1,7 +1,101 @@
 {
   "PAGES": {
-      "HOME": {
-          "TITLE": "App works !"
-      }
+    "MQTT": {
+        "PAGE_NAME": "MQTT",
+        "MQTT_CONFIGURATION": "MQTT Configuration",
+        "CONFIGURATION": {
+            "BROKER_ADDRESS": "Insert Broker Address",
+            "BROKER_ADDRESS_PLACEHOLDER": "Broker Address",
+            "BROKER_PORT": "Insert Broker Port",
+            "BROKER_PORT_PLACEHOLDER": "Broker Port",
+            "CLIENT_ID": "Insert Client ID",
+            "CLIENT_ID_PLACEHOLDER": "Client ID",
+            "BROKER_USER": "Insert Broker User",
+            "BROKER_USER_PLACEHOLDER": "Broker User",
+            "BROKER_PASSWORD": "Insert Broker Password",
+            "BROKER_PASSWORD_PLACEHOLDER": "Broker Password",
+            "BROKER_PROTOCOL": "Insert Broker Protocol",
+            "BROKER_PROTOCOL_PLACEHOLDER": "Broker Protocol",
+            "QOS": "Insert QoS type",
+            "QOS_PLACEHOLDER": "QoS",
+            "QOS_TYPE": "Insert QoS type. If no one selected, default is 0",
+            "QOS_VALUES": {
+                "0": "0",
+                "1": "1",
+                "2": "2"
+            },
+            "TOPIC_TO_SUBSCRIBE": "Insert Topic to subscribe",
+            "TOPIC": "Topic",
+            "BUTTONS": {
+                "SAVE_BROKER": "Save broker configuration",
+                "SAVE_TOPIC": "Save topic",
+                "SAVE_PROTO": "Save proto info",
+                "SUBSCRIBE_TO": "Subscribe to the selected topic",
+                "UNSUBSCRIBE_FROM": "Unsubscribe from selected topic",
+                "CONNECT": "Connect to the broker server",
+                "DISCONNECT": "Disconnect from the broker server",
+                "DELETE_BROKER": "Delete saved broker configuration",
+                "DELETE_TOPIC": "Delete saved topic",
+                "DELETE_PROTO": "Delete saved proto info",
+                "CLEAR_MESSAGES": "Clear all the message recived",
+                "CLEAR_SELECTED": "Clear selected message",
+                "CLEAR_TEXTAREA": "Clean text area",
+                "TO_HEX": "Convert to Hex the message",
+                "TO_STRING": "Convert to String the message",
+                "TO_JSON": "Convert to JSON the message",
+                "COPY_MESSAGE": "Copy the message to the clipboard"
+            },
+            "CLICK_A_TOPIC": "Click on a topic to show the message here"
+        },
+        "PROTOBUF_INFO": " Protobuf info:",
+        "PROTOBUF": {
+            "PATH": "Insert here the path where proto files are",
+            "PATH_PLACEHOLDER": "Protobuf path",
+            "FILE_NAME": "Insert here the proto file name",
+            "FILE_NAME_PLACEHOLDER": "Protobuf file name",
+            "PACKAGE": "Insert here the package",
+            "PACKAGE_PLACEHOLDER": "Protobuf package",
+            "MESSAGE": "Insert here the message name",
+            "MESSAGE_PLACEHOLDER": "Protobuf message"
+        },
+        "MESSAGE": "Message:",
+        "MQTT_PUBLISHER": "MQTT Publisher",
+        "PUBLISH": {
+            "SUBTITLE": "Insert below, the topic, the message and the proto file to encode your message",
+            "ON_TOPIC": "Insert Topic where publish",
+            "MESSAGE": "Publish message"
+        },
+        "MQTT_SUBSCRIPTION": "Subscription",
+        "WRITE_HERE": "Write here your message",
+        "MESSAGE_TO_PUBLISH": "Insert Message to publish. Remember, if you are using an enum, insert the index of the value."
+    },
+    "POSTERS": {
+        "PAGE_NAME": "HTTP",
+        "HTTP_CLIENT": "PostEr"
+    },
+    "CONFIRM_DIALOG": {
+        "MESSAGE": "Are you sure you want delete this configuration?",
+        "YES": "Yes",
+        "NO": "No",
+        "DONT": "Don't remove the configuration",
+        "DO": "Remove the configuration"
+    },
+    "BUTTONS": {
+        "SAVE": "Save",
+        "DELETE": "Delete",
+        "CONNECT": "Connect",
+        "DISCONNECT": "Disconnect",
+        "SUBSCRIBE": "Subscribe",
+        "UNSUBSCRIBE": "Unsubscribe",
+        "CLEAR": "Clear",
+        "COPY": "Copy",
+        "AS_PROTO": "Publish as protobuf message",
+        "AS_HEX": "Publish as Hex",
+        "AS_STRING": "Publish as String",
+        "JSON": "JSON",
+        "HEX": "Hex",
+        "STRING": "String"
+
+    }
   }
 }

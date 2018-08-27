@@ -1,8 +1,18 @@
-<h1 mat-dialog-title> Are you sure you want delete this configuration?</h1>
+<h1 mat-dialog-title> {{ 'PAGES.CONFIRM_DIALOG.MESSAGE' | translate }} </h1>
 <div mat-dialog-content>
 
 </div>
 <div mat-dialog-actions class="actions">
-  <button mat-raised-button matTooltip="Don't remove the configuration" [mat-dialog-close]="false" color="primary" (click)="onNoClick()" cdkFocusInitial><mat-icon class="icon-text" fontSet="far" fontIcon="fa-thumbs-down"></mat-icon>No</button>
-  <button mat-raised-button matTooltip="Remove the configuration" color="warn" [mat-dialog-close]="true"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-thumbs-up"></mat-icon>Yes</button>
+  <button mat-raised-button matTooltip="{{ 'PAGES.CONFIRM_DIALOG.DONT' | translate }}" [mat-dialog-close]="false" color="primary" (click)="onNoClick()" cdkFocusInitial>
+    <mat-icon class="icon-text" fontSet="far" fontIcon="fa-thumbs-down">
+
+    </mat-icon>
+    {{ 'PAGES.CONFIRM_DIALOG.NO' | translate }}
+  </button>
+  <button mat-raised-button matTooltip="{{ 'PAGES.CONFIRM_DIALOG.DO' | translate }}" color="warn" [mat-dialog-close]="true">
+    <mat-icon class="icon-text" fontSet="far" fontIcon="fa-thumbs-up">
+
+    </mat-icon>
+    {{ 'PAGES.CONFIRM_DIALOG.YES' | translate }}
+  </button>
 </div>

@@ -17,7 +17,11 @@ function createWindow() {
     y: 0,
     width: size.width,
     height: size.height,
-    title: 'Mqtt Cripto'
+    title: 'Mqtt Cripto',
+    webPreferences: {
+      webSecurity: false,
+      allowRunningInsecureContent: true
+    }
   });
 
   if (serve) {
@@ -47,7 +51,7 @@ try {
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
   app.on('ready', createWindow);
-
+  app.commandLine.appendSwitch('ignore-certificate-errors');
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {
     // On OS X it is common for applications and their menu bar

@@ -1,0 +1,102 @@
+{
+    "PAGES": {
+      "MQTT": {
+          "PAGE_NAME": "MQTT",
+          "MQTT_CONFIGURATION": "Configurazioni di MQTT",
+          "CONFIGURATION": {
+              "BROKER_ADDRESS": "Inserisci l'indirizzo del broker",
+              "BROKER_ADDRESS_PLACEHOLDER": "Broker Address",
+              "BROKER_PORT": "Inserisci la porta del broker",
+              "BROKER_PORT_PLACEHOLDER": "Broker Port",
+              "CLIENT_ID": "Inserisci il Client ID",
+              "CLIENT_ID_PLACEHOLDER": "Client ID",
+              "BROKER_USER": "Inserisci l'utente del broker",
+              "BROKER_USER_PLACEHOLDER": "Broker User",
+              "BROKER_PASSWORD": "Inserisci la password del broker",
+              "BROKER_PASSWORD_PLACEHOLDER": "Broker Password",
+              "BROKER_PROTOCOL": "Inserisci il protocollo",
+              "BROKER_PROTOCOL_PLACEHOLDER": "Broker Protocol",
+              "QOS": "Inserisci il tipo di QoS",
+              "QOS_PLACEHOLDER": "QoS",
+              "QOS_TYPE": "Inserisci il tipo di QoS, quello di default è 0",
+              "QOS_VALUES": {
+                  "0": "0",
+                  "1": "1",
+                  "2": "2"
+              },
+              "TOPIC_TO_SUBSCRIBE": "Inserisci il topic a cui vuoi sottoscriverti",
+              "TOPIC": "Topic",
+              "BUTTONS": {
+                  "SAVE_BROKER": "Salva le configurazioni del broker",
+                  "SAVE_TOPIC": "Salva topic",
+                  "SAVE_PROTO": "Salva le informazioni di protobuf",
+                  "SUBSCRIBE_TO": "Sottoscriviti al topic selezionato",
+                  "UNSUBSCRIBE_FROM": "Disiscriviti dal topic selezionato",
+                  "CONNECT": "Connetti al broker",
+                  "DISCONNECT": "Disconnetti dal broker",
+                  "DELETE_BROKER": "Camcella le configurazioni del broker",
+                  "DELETE_TOPIC": "Cancella i topic salvati",
+                  "DELETE_PROTO": "Cancella i proto salvati",
+                  "CLEAR_MESSAGES": "Pulisci tutti i messaggi ricevuti",
+                  "CLEAR_SELECTED": "Deseleziona il messaggio selezionato",
+                  "CLEAR_TEXTAREA": "Pulisci textarea",
+                  "TO_HEX": "Converti il messaggio in esadecimale",
+                  "TO_STRING": "Converti il messaggio in stringa",
+                  "TO_JSON": "Converti il messaggio in JSON",
+                  "COPY_MESSAGE": "Copia il messaggio negli appunti"
+              },
+              "CLICK_A_TOPIC": "Clicca su un topic per mostrare qui il messaggio"
+          },
+          "PROTOBUF_INFO": " Protobuf info:",
+          "PROTOBUF": {
+              "PATH": "Inserisci il path del file protobuf",
+              "PATH_PLACEHOLDER": "Path del file",
+              "FILE_NAME": "Inserisci il nome del file protobuf",
+              "FILE_NAME_PLACEHOLDER": "Nome del file protobuf",
+              "PACKAGE": "Inserisci il package",
+              "PACKAGE_PLACEHOLDER": "Package",
+              "MESSAGE": "Inserisci il nome del messaggio",
+              "MESSAGE_PLACEHOLDER": "Messaggio protobuf"
+          },
+          "MESSAGE": "Messaggio:",
+          "MQTT_PUBLISHER": "Pubblica su MQTT",
+          "PUBLISH": {
+              "SUBTITLE": "Inserisci qui sotto il topic, il messaggio e le inforamzioni del file protobuf per codificare il messaggio",
+              "ON_TOPIC": "Inserisci il topic su cui vuoi pubblicare",
+              "MESSAGE": "Pubblica il messaggio"
+          },
+          "MQTT_SUBSCRIPTION": "Sottoscrivi",
+          "WRITE_HERE": "Scrivi qui il tuo messaggio",
+          "MESSAGE_TO_PUBLISH": "Inserisci il messaggio da pubblicare. Ricorda, se usi un enumerativo utilizza il suo indice."
+      },
+      "POSTERS": {
+          "PAGE_NAME": "HTTP",
+          "HTTP_CLIENT": "PostEr"
+      },
+      "CONFIRM_DIALOG": {
+          "MESSAGE": "Sei sicuro di voler cancellare questa configurazione?",
+          "YES": "Si",
+          "NO": "No",
+          "DONT": "Non cancellare",
+          "DO": "Rimuovi la configurazione"
+      },
+      "BUTTONS": {
+          "SAVE": "Salva",
+          "DELETE": "Cancella",
+          "CONNECT": "Connetti",
+          "DISCONNECT": "Disconnetti",
+          "SUBSCRIBE": "Sottoscriviti",
+          "UNSUBSCRIBE": "Disiscriviti",
+          "CLEAR": "Rimuovi",
+          "COPY": "Copia",
+          "AS_PROTO": "Pubblica come messaggio protobuf",
+          "AS_HEX": "Pubblica come Hex",
+          "AS_STRING": "Pubblica come Stringa",
+          "JSON": "JSON",
+          "HEX": "Hex",
+          "STRING": "String"
+  
+      }
+    }
+  }
+  

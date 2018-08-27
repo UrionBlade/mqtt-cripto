@@ -1,11 +1,12 @@
-import 'zone.js/dist/zone-mix';
-import 'reflect-metadata';
-import '../polyfills';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import 'zone.js/dist/zone-mix'
+import 'reflect-metadata'
+import '../polyfills'
+import { BrowserModule } from '@angular/platform-browser'
+import { NgModule } from '@angular/core'
+import { FormsModule, ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms'
 
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http'
+import { HttpModule } from '@angular/http'
 
 import { AppRoutingModule } from './app-routing.module'
 
@@ -51,11 +52,13 @@ import {
     MatFormFieldModule,
     MatInputModule,
     MatTooltipModule
-} from '@angular/material';
-import {MatDialogModule} from '@angular/material/dialog';
+} from '@angular/material'
+import {MatDialogModule} from '@angular/material/dialog'
 import { AppComponent } from './app.component'
 import { MqttClientComponent, DialogComponent } from './components/mqtt-client/mqtt-client.component'
 import { HeaderComponent } from './components/header/header.component'
+import { PostersComponent } from './components/posters/posters.component'
+import { HttpService } from './providers/http.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -112,7 +115,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     HeaderComponent,
     MqttClientComponent,
     WebviewDirective,
-    DialogComponent
+    DialogComponent,
+    PostersComponent
   ],
   entryComponents: [DialogComponent],
   imports: [
@@ -120,6 +124,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatDialogModule,
     BrowserModule,
     FormsModule,
+    HttpModule,
     materialModules,
     formsModule,
     HttpClientModule,
@@ -135,6 +140,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   exports: [],
   providers: [
+    HttpService,
     ElectronService,
     {
       provide: PERFECT_SCROLLBAR_CONFIG,

@@ -1,82 +1,142 @@
 <mat-card class="card">
   <mat-card-title>
-    Mqtt Configuration
+    {{ 'PAGES.MQTT.MQTT_CONFIGURATION' | translate }}
   </mat-card-title>
   <mat-card-content>
     <form [formGroup]="configurationForm">
       <mat-form-field class="form-field">
-        <input matInput placeholder="Broker Address" [(ngModel)]="broker.brokerAddress" formControlName="mqttBrokerAddress"/>
-        <mat-hint>Insert Broker Address</mat-hint> 
+        <input matInput placeholder="{{ 'PAGES.MQTT.CONFIGURATION.BROKER_ADDRESS_PLACEHOLDER' | translate }}" [(ngModel)]="broker.brokerAddress" formControlName="mqttBrokerAddress"/>
+        <mat-hint>{{ 'PAGES.MQTT.CONFIGURATION.BROKER_ADDRESS' | translate }}</mat-hint> 
       </mat-form-field>
       <mat-form-field class="form-field">
-        <input matInput placeholder="Broker Port" [(ngModel)]="broker.brokerPort" formControlName="mqttBrokerPort"/>
-        <mat-hint>Insert Broker Port</mat-hint> 
+        <input matInput placeholder="{{ 'PAGES.MQTT.CONFIGURATION.BROKER_PORT_PLACEHOLDER' | translate }}" [(ngModel)]="broker.brokerPort" formControlName="mqttBrokerPort"/>
+        <mat-hint>{{ 'PAGES.MQTT.CONFIGURATION.BROKER_PORT' | translate }}</mat-hint> 
       </mat-form-field>
       <mat-form-field class="form-field">
-        <input matInput placeholder="Client ID" [(ngModel)]="broker.clientId" formControlName="mqttClientID"/>
-        <mat-hint>Insert Client Id</mat-hint> 
+        <input matInput placeholder="{{ 'PAGES.MQTT.CONFIGURATION.CLIENT_ID_PLACEHOLDER' | translate }}" [(ngModel)]="broker.clientId" formControlName="mqttClientID"/>
+        <mat-hint>{{ 'PAGES.MQTT.CONFIGURATION.CLIENT_ID' | translate }}</mat-hint> 
       </mat-form-field>
       <mat-form-field class="form-field">
-        <input matInput placeholder="Broker User" [(ngModel)]="broker.brokerUser" formControlName="mqttBrokerUser"/>
-        <mat-hint>Insert Broker User</mat-hint> 
+        <input matInput placeholder="{{ 'PAGES.MQTT.CONFIGURATION.BROKER_USER_PLACEHOLDER' | translate }}" [(ngModel)]="broker.brokerUser" formControlName="mqttBrokerUser"/>
+        <mat-hint>{{ 'PAGES.MQTT.CONFIGURATION.BROKER_USER' | translate }}</mat-hint> 
       </mat-form-field>
       <mat-form-field class="form-field">
-        <input matInput placeholder="Broker Password" [(ngModel)]="broker.brokerPassword" formControlName="mqttBrokerPassword"/>
-        <mat-hint>Insert Broker Password</mat-hint> 
+        <input matInput placeholder="{{ 'PAGES.MQTT.CONFIGURATION.BROKER_PASSWORD_PLACEHOLDER' | translate }}" [(ngModel)]="broker.brokerPassword" formControlName="mqttBrokerPassword"/>
+        <mat-hint>{{ 'PAGES.MQTT.CONFIGURATION.BROKER_PASSWORD' | translate }}</mat-hint> 
       </mat-form-field>
       <mat-form-field class="form-field">
-        <mat-select placeholder="Broker Protocol" [(ngModel)]="broker.protocol" formControlName="mqttBrokerProtocol">
+        <mat-select placeholder="{{ 'PAGES.MQTT.CONFIGURATION.BROKER_PROTOCOL_PLACEHOLDER' | translate }}" [(ngModel)]="broker.protocol" formControlName="mqttBrokerProtocol">
           <mat-option *ngFor="let proto of protocol" value="{{proto}}">
             {{ proto }}
           </mat-option>
         </mat-select>
-        <mat-hint>Insert Broker Protocol</mat-hint>
+        <mat-hint>{{ 'PAGES.MQTT.CONFIGURATION.BROKER_PROTOCOL' | translate }}</mat-hint>
       </mat-form-field>
       <mat-form-field class="form-field">
-        <mat-select placeholder="QoS" [(ngModel)]="broker.qos" formControlName="mqttQos">
+        <mat-select placeholder="{{ 'PAGES.MQTT.CONFIGURATION.QOS_PLACEHOLDER' | translate }}" [(ngModel)]="broker.qos" formControlName="mqttQos">
           <mat-option value="0">
-            0
+            {{ 'PAGES.MQTT.CONFIGURATION.QOS_VALUES.0' | translate }}
           </mat-option>
           <mat-option value="1">
-            1
+            {{ 'PAGES.MQTT.CONFIGURATION.QOS_VALUES.1' | translate }}
           </mat-option>
           <mat-option value="2">
-            2
+            {{ 'PAGES.MQTT.CONFIGURATION.QOS_VALUES.2' | translate }}
           </mat-option>
         </mat-select>
-        <mat-hint>Insert QoS type</mat-hint> 
+        <mat-hint>{{ 'PAGES.MQTT.CONFIGURATION.QOS' | translate }}</mat-hint> 
       </mat-form-field>
     </form>
   </mat-card-content>
   <mat-card-actions>
-   <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Save broker config" color="primary" (click)="saveBrokerConfig()"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-save"></mat-icon>Save</button></span>
-   <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Connect to the broker server" color="primary" (click)="connectBroker()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-play"></mat-icon>Connect</button></span>
-   <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Disconnect from the broker server" color="warn" (click)="disconnectBroker()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-stop"></mat-icon>Disconnect</button></span>
-   <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Delete saved broker configuration" color="warn" (click)="openDialog(mqttConfig)"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-trash-alt"></mat-icon>Delete</button></span>
+    <span  class="buttons">
+      <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.CONFIGURATION.BUTTONS.SAVE_BROKER' | translate }}" color="primary" (click)="saveBrokerConfig()">
+        <mat-icon class="icon-text" fontSet="far" fontIcon="fa-save">
+
+        </mat-icon>
+        {{ 'PAGES.BUTTONS.SAVE' | translate }}
+      </button>
+    </span>
+    <span  class="buttons">
+      <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.CONFIGURATION.BUTTONS.CONNECT' | translate }}" color="primary" (click)="connectBroker()">
+        <mat-icon class="icon-text" fontSet="fas" fontIcon="fa-play">
+
+        </mat-icon>
+        {{ 'PAGES.BUTTONS.CONNECT' | translate }}
+      </button>
+    </span>
+    <span  class="buttons">
+      <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.CONFIGURATION.BUTTONS.DISCONNECT' | translate }}" color="warn" (click)="disconnectBroker()">
+        <mat-icon class="icon-text" fontSet="fas" fontIcon="fa-stop">
+
+        </mat-icon>
+        {{ 'PAGES.BUTTONS.DISCONNECT' | translate }}
+      </button>
+    </span>
+    <span  class="buttons">
+      <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.CONFIGURATION.BUTTONS.DELETE_BROKER' | translate }}" color="warn" (click)="openDialog(mqttConfig)">
+        <mat-icon class="icon-text" fontSet="far" fontIcon="fa-trash-alt">
+
+        </mat-icon>
+        {{ 'PAGES.BUTTONS.DELETE' | translate }}
+      </button>
+    </span>
   </mat-card-actions>
 </mat-card>
 <mat-card class="card">
   <mat-card-title>
-    Subscribtion
+    {{ 'PAGES.MQTT.MQTT_SUBSCRIPTION' | translate }}
   </mat-card-title>
   <mat-card-content>
     <span>
       <form [formGroup]="topicForm">
         <mat-form-field class="form-field">
-          <input matInput placeholder="Topic" [(ngModel)]="subscribeTo.topics[0]" formControlName="topicSubscribed"/>
-          <mat-hint>Insert Topic to subscribe</mat-hint> 
+          <input matInput placeholder="{{ 'PAGES.MQTT.CONFIGURATION.TOPIC' | translate }}" [(ngModel)]="subscribeTo.topics[0]" formControlName="topicSubscribed"/>
+          <mat-hint>{{ 'PAGES.MQTT.CONFIGURATION.TOPIC_TO_SUBSCRIBE' | translate }}</mat-hint> 
         </mat-form-field>
       </form>
-    </span> 
-    <span>
-      
     </span>
     <mat-card-actions>
-     <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Save topic" color="primary" (click)="saveTopic()"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-save"></mat-icon>Save</button></span>
-     <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Subscribe to the selected topic" color="primary" (click)="subscribeTopic()" (click)="drawer.open()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-sign-in-alt"></mat-icon>Subscribe</button></span>
-     <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Clear proto buffer" color="primary" (click)="clearBuffer()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-eraser"></mat-icon>Clear</button></span>
-     <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Unsubscribe from selected topic" color="warn" (click)="unsubscribeTopic()" (click)="drawer.close()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-sign-out-alt"></mat-icon>Unsubscribe</button></span>
-     <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Delete saved topic" color="warn" (click)="openDialog(topicFile)"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-trash-alt"></mat-icon>Delete</button></span>
+      <span  class="buttons">
+        <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.CONFIGURATION.BUTTONS.SAVE_TOPIC' | translate }}" color="primary" (click)="saveTopic()">
+          <mat-icon class="icon-text" fontSet="far" fontIcon="fa-save">
+
+          </mat-icon>
+          {{ 'PAGES.BUTTONS.SAVE' | translate }}
+        </button>
+      </span>
+      <span  class="buttons">
+        <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.CONFIGURATION.BUTTONS.SUBSCRIBE_TO' | translate }}" color="primary" (click)="subscribeTopic()" (click)="drawer.open()">
+          <mat-icon class="icon-text" fontSet="fas" fontIcon="fa-sign-in-alt">
+
+          </mat-icon>
+          {{ 'PAGES.BUTTONS.SUBSCRIBE' | translate }}
+        </button>
+      </span>
+      <span  class="buttons">
+        <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.CONFIGURATION.BUTTONS.CLEAR_MESSAGES' | translate }}" color="primary" (click)="clearBuffer()">
+          <mat-icon class="icon-text" fontSet="fas" fontIcon="fa-eraser">
+
+          </mat-icon>
+          {{ 'PAGES.BUTTONS.CLEAR' | translate }}
+        </button>
+      </span>
+      <span  class="buttons">
+        <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.CONFIGURATION.BUTTONS.UNSUBSCRIBE_FROM' | translate }}" color="warn" (click)="unsubscribeTopic()" (click)="drawer.close()">
+          <mat-icon class="icon-text" fontSet="fas" fontIcon="fa-sign-out-alt">
+
+          </mat-icon>
+          {{ 'PAGES.BUTTONS.UNSUBSCRIBE' | translate }}
+        </button>
+      </span>
+      <span  class="buttons">
+        <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.CONFIGURATION.BUTTONS.DELETE_TOPIC' | translate }}" color="warn" (click)="openDialog(topicFile)">
+          <mat-icon class="icon-text" fontSet="far" fontIcon="fa-trash-alt">
+
+          </mat-icon>
+          {{ 'PAGES.BUTTONS.DELETE' | translate }}
+        </button>
+      </span>
       <mat-drawer-container class="example-container">
         <mat-drawer class="drawer" #drawer>
           <perfect-scrollbar>      
@@ -100,102 +160,179 @@
   </mat-card-title>
   <mat-card-content>
     <mat-card-subtitle class="subtitle">
-      Protobuff info: 
+      {{ 'PAGES.MQTT.PROTOBUF_INFO' | translate }} 
     </mat-card-subtitle>
 
     <form [formGroup]="protoForm">
       <mat-form-field class="form-field">
-        <input matInput placeholder="Protobuf Path" [(ngModel)]="proto.protobufPath" formControlName="protobufPath"/>
-        <mat-hint>Insert here the path where proto files are</mat-hint> 
+        <input matInput placeholder="{{ 'PAGES.MQTT.PROTOBUF.PATH_PLACEHOLDER' | translate }}" [(ngModel)]="proto.protobufPath" formControlName="protobufPath"/>
+        <mat-hint>{{ 'PAGES.MQTT.PROTOBUF.PATH' | translate }}</mat-hint> 
       </mat-form-field>
 
       <mat-form-field class="form-field">
-        <input matInput placeholder="Protobuf File Name" [(ngModel)]="proto.protobufFile" formControlName="protobufFile"/>
-        <mat-hint>Insert here the proto file name</mat-hint> 
+        <input matInput placeholder="{{ 'PAGES.MQTT.PROTOBUF.FILE_NAME_PLACEHOLDER' | translate }}" [(ngModel)]="proto.protobufFile" formControlName="protobufFile"/>
+        <mat-hint>{{ 'PAGES.MQTT.PROTOBUF.FILE_NAME' | translate }}</mat-hint> 
       </mat-form-field>
 
       <mat-form-field class="form-field">
-          <input matInput placeholder="Protobuf Package" [(ngModel)]="proto.protobufPackage" formControlName="protoPackage"/>
-          <mat-hint>Insert here the package</mat-hint> 
-        </mat-form-field>
-  
-        <mat-form-field class="form-field">
-          <input matInput placeholder="Protobuf Message" [(ngModel)]="proto.protobufMessage" formControlName="protoMessage"/>
-          <mat-hint>Insert here the proto message type</mat-hint> 
-        </mat-form-field>
+        <input matInput placeholder="{{ 'PAGES.MQTT.PROTOBUF.PACKAGE_PLACEHOLDER' | translate }}" [(ngModel)]="proto.protobufPackage" formControlName="protoPackage"/>
+        <mat-hint>{{ 'PAGES.MQTT.PROTOBUF.PACKAGE' | translate }}</mat-hint> 
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <input matInput placeholder="{{ 'PAGES.MQTT.PROTOBUF.MESSAGE_PLACEHOLDER' | translate }}" [(ngModel)]="proto.protobufMessage" formControlName="protoMessage"/>
+        <mat-hint>{{ 'PAGES.MQTT.PROTOBUF.MESSAGE' | translate }}</mat-hint> 
+      </mat-form-field>
     </form>
 
     <mat-card-subtitle class="subtitle">
-      Message:
+      {{ 'PAGES.MQTT.MESSAGE' | translate }}
     </mat-card-subtitle>
     <span class="messages">
       <pre id="focussed-message">{{ focussedMessage.message }}</pre>
     </span>
   </mat-card-content>
   <mat-card-actions>
-    <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Save proto info" color="primary" (click)="saveProto()"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-save"></mat-icon>Save</button></span>
-    <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Clear selected message" color="primary" (click)="removeMessage()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-eraser"></mat-icon>Clear</button></span>
-    <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Delete saved proto info" color="warn" (click)="openDialog(protoFile)"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-trash-alt"></mat-icon>Delete</button></span>
-    <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Convert to Hex proto message" color="accent" (click)="toHex()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-exchange-alt"></mat-icon>Hex</button></span>
-    <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Convert to string proto message" color="accent" (click)="toStrings()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-exchange-alt"></mat-icon>String</button></span>
-    <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Convert to json proto message" color="accent" (click)="toJson()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-exchange-alt"></mat-icon>Json</button></span>
-    <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Copy message to clipboard" color="accent" (click)="copyMessage(focussedMessage.message)"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-copy"></mat-icon>Copy</button></span>
+    <span class="buttons"> 
+      <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.CONFIGURATION.BUTTONS.SAVE_PROTO' | translate }}" color="primary" (click)="saveProto()">
+        <mat-icon class="icon-text" fontSet="far" fontIcon="fa-save">
+
+        </mat-icon>
+        {{ 'PAGES.BUTTONS.SAVE' | translate }}
+      </button>
+    </span>
+    <span class="buttons">
+      <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.CONFIGURATION.BUTTONS.CLEAR_SELECTED' | translate }}" color="primary" (click)="removeMessage()">
+        <mat-icon class="icon-text" fontSet="fas" fontIcon="fa-eraser">
+
+        </mat-icon>
+        {{ 'PAGES.BUTTONS.CLEAR' | translate }}
+      </button>
+    </span>
+    <span class="buttons">
+      <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.CONFIGURATION.BUTTONS.DELETE_PROTO' | translate }}" color="warn" (click)="openDialog(protoFile)">
+        <mat-icon class="icon-text" fontSet="far" fontIcon="fa-trash-alt">
+
+        </mat-icon>
+        {{ 'PAGES.BUTTONS.DELETE' | translate }}
+      </button>
+    </span>
+    <span class="buttons">
+      <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.CONFIGURATION.BUTTONS.TO_HEX' | translate }}" color="accent" (click)="toHex()">
+        <mat-icon class="icon-text" fontSet="fas" fontIcon="fa-exchange-alt">
+
+        </mat-icon>
+        {{ 'PAGES.BUTTONS.HEX' | translate }}
+      </button>
+    </span>
+    <span class="buttons">
+      <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.CONFIGURATION.BUTTONS.TO_STRING' | translate }}" color="accent" (click)="toStrings()">
+        <mat-icon class="icon-text" fontSet="fas" fontIcon="fa-exchange-alt">
+
+        </mat-icon>
+        {{ 'PAGES.BUTTONS.STRING' | translate }}
+      </button>
+    </span>
+    <span class="buttons">
+      <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.CONFIGURATION.BUTTONS.TO_JSON' | translate }}" color="accent" (click)="toJson()">
+        <mat-icon class="icon-text" fontSet="fas" fontIcon="fa-exchange-alt">
+
+        </mat-icon>
+        {{ 'PAGES.BUTTONS.JSON' | translate }}
+      </button>
+    </span>
+    <span class="buttons">
+      <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.CONFIGURATION.BUTTONS.COPY_MESSAGE' | translate }}" color="accent" (click)="copyMessage(focussedMessage.message)">
+        <mat-icon class="icon-text" fontSet="far" fontIcon="fa-copy">
+
+        </mat-icon>
+        {{ 'PAGES.BUTTONS.COPY' | translate }}
+      </button>
+    </span>
   </mat-card-actions>
 </mat-card>
 
 <mat-card class="card">
   <mat-card-title>
-    Mqtt Publisher
+      {{ 'PAGES.MQTT.MQTT_PUBLISHER' | translate }}
   </mat-card-title>
   <mat-card-content>
     <mat-card-subtitle>
-      Insert below, the topic, the message and the proto file to encode your message
+        {{ 'PAGES.MQTT.PUBLISH.SUBTITLE' | translate }}
     </mat-card-subtitle>
     <form [formGroup]="publishForm">
       <mat-form-field class="form-field">
-        <input matInput placeholder="Protobuf Path" [(ngModel)]="proto.protobufPath" formControlName="publishProtoPath"/>
-        <mat-hint>Insert here the path where proto files are</mat-hint> 
+        <input matInput placeholder="{{ 'PAGES.MQTT.PROTOBUF.PATH_PLACEHOLDER' | translate }}" [(ngModel)]="proto.protobufPath" formControlName="publishProtoPath"/>
+        <mat-hint>{{ 'PAGES.MQTT.PROTOBUF.PATH' | translate }}</mat-hint> 
       </mat-form-field>
 
       <mat-form-field class="form-field">
-        <input matInput placeholder="Protobuf File Name" [(ngModel)]="proto.protobufFile" formControlName="publishProtoFile"/>
-        <mat-hint>Insert here the proto file name</mat-hint> 
+        <input matInput placeholder="{{ 'PAGES.MQTT.PROTOBUF.FILE_NAME_PLACEHOLDER' | translate }}" [(ngModel)]="proto.protobufFile" formControlName="publishProtoFile"/>
+        <mat-hint>{{ 'PAGES.MQTT.PROTOBUF.FILE_NAME' | translate }}</mat-hint> 
       </mat-form-field>
 
       <mat-form-field class="form-field">
-        <input matInput placeholder="Protobuf Package" [(ngModel)]="proto.protobufPackage" formControlName="publishProtoPack"/>
-        <mat-hint>Insert here the package</mat-hint> 
+        <input matInput placeholder="{{ 'PAGES.MQTT.PROTOBUF.PACKAGE_PLACEHOLDER' | translate }}" [(ngModel)]="proto.protobufPackage" formControlName="publishProtoPack"/>
+        <mat-hint>{{ 'PAGES.MQTT.PROTOBUF.PACKAGE' | translate }}</mat-hint> 
       </mat-form-field>
 
       <mat-form-field class="form-field">
-        <input matInput placeholder="Protobuf Message" [(ngModel)]="proto.protobufMessage" formControlName="publishProtoMess"/>
-        <mat-hint>Insert here the proto message type</mat-hint> 
+        <input matInput placeholder="{{ 'PAGES.MQTT.PROTOBUF.MESSAGE_PLACEHOLDER' | translate }}" [(ngModel)]="proto.protobufMessage" formControlName="publishProtoMess"/>
+        <mat-hint>{{ 'PAGES.MQTT.PROTOBUF.MESSAGE_PLACEHOLDER' | translate }}</mat-hint> 
       </mat-form-field>
 
       <mat-form-field class="form-field">
         <input matInput placeholder="Topic" [(ngModel)]="publishingTopic" formControlName="publishTopic"/>
-        <mat-hint>Insert Topic where publish</mat-hint> 
+        <mat-hint>{{ 'PAGES.MQTT.PUBLISH.ON_TOPIC' | translate }}</mat-hint> 
       </mat-form-field>
       <mat-form-field class="form-field">
-          <mat-select placeholder="QoS" [(ngModel)]="publishingQos" formControlName="publishQos">
+          <mat-select placeholder="{{ 'PAGES.MQTT.CONFIGURATION.QOS_PLACEHOLDER' | translate }}" [(ngModel)]="publishingQos" formControlName="publishQos">
             <mat-option value="0">
-              0
+              {{ 'PAGES.MQTT.CONFIGURATION.QOS_VALUES.0' | translate }}
             </mat-option>
             <mat-option value="1">
-              1
+              {{ 'PAGES.MQTT.CONFIGURATION.QOS_VALUES.1' | translate }}
             </mat-option>
             <mat-option value="2">
-              2
+              {{ 'PAGES.MQTT.CONFIGURATION.QOS_VALUES.2' | translate }}
             </mat-option>
           </mat-select>
           <mat-hint>Insert QoS type. If no one selected, default is 0</mat-hint> 
         </mat-form-field>
-      <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Publish message" color="primary" (click)="publishingMessage ? publish() : showSnackBar('No message selected')"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-share-square"></mat-icon>Publish as Proto</button></span>
-      <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Publish message" color="primary" (click)="publishingMessage ? publishHex() : showSnackBar('No message selected')"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-share-square"></mat-icon>Publish as Hex</button></span>
-      <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Publish message" color="primary" (click)="publishingMessage ? publishString() : showSnackBar('No message selected')"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-share-square"></mat-icon>Publish as String</button></span>
-      <span class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Clean text area" color="accent" (click)="cleanTextArea()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-eraser"></mat-icon>Clear</button></span>
+      <span class="buttons">
+        <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.PUBLISH.MESSAGE' | translate }}" color="primary" (click)="publishingMessage ? publish() : showSnackBar('No message selected')">
+          <mat-icon class="icon-text" fontSet="far" fontIcon="fa-share-square">
+
+          </mat-icon>
+          {{ 'PAGES.BUTTONS.AS_PROTO' | translate }}
+        </button>
+      </span>
+      <span class="buttons">
+        <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.PUBLISH.MESSAGE' | translate }}" color="primary" (click)="publishingMessage ? publishHex() : showSnackBar('No message selected')">
+          <mat-icon class="icon-text" fontSet="far" fontIcon="fa-share-square">
+
+          </mat-icon>
+          {{ 'PAGES.BUTTONS.AS_HEX' | translate }}
+        </button>
+      </span>
+      <span class="buttons">
+        <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.PUBLISH.MESSAGE' | translate }}" color="primary" (click)="publishingMessage ? publishString() : showSnackBar('No message selected')">
+          <mat-icon class="icon-text" fontSet="far" fontIcon="fa-share-square">
+
+          </mat-icon>
+          {{ 'PAGES.BUTTONS.AS_STRING' | translate }}
+        </button>
+      </span>
+      <span class="buttons">
+        <button class="btn-cripto" mat-raised-button matTooltip="{{ 'PAGES.MQTT.CONFIGURATION.BUTTONS.CLEAR_TEXTAREA' | translate }}" color="primary" (click)="cleanTextArea()">
+          <mat-icon class="icon-text" fontSet="fas" fontIcon="fa-eraser">
+
+          </mat-icon>
+          {{ 'PAGES.BUTTONS.CLEAR' | translate }}
+        </button>
+      </span>
       <mat-form-field class="form-field-text-area" appearance="outline">
-        <mat-label>Write here your message</mat-label>
+        <mat-label>{{ 'PAGES.MQTT.WRITE_HERE' | translate }}</mat-label>
         <textarea matInput
                   cdkTextareaAutosize
                   #autosize="cdkTextareaAutosize"
@@ -205,7 +342,7 @@
                   [(ngModel)]="publishingMessage" 
                   formControlName="publishMessage"
           ></textarea>
-        <mat-hint>Insert Message to publish. Remember, if you are using an enum, insert the index of the value.</mat-hint> 
+        <mat-hint>{{ 'PAGES.MQTT.MESSAGE_TO_PUBLISH' | translate }}</mat-hint> 
       </mat-form-field>
     </form>
   </mat-card-content>
