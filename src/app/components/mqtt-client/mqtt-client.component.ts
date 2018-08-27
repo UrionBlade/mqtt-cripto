@@ -170,6 +170,8 @@ export class MqttClientComponent implements OnInit {
 
   connectBroker() {
 
+    const self = this
+
     if (client) {
       client.end()
     }
@@ -182,7 +184,15 @@ export class MqttClientComponent implements OnInit {
       this.broker.brokerPassword,
       this.broker.qos
     )
-    this.showSnackBar('Broker connection estabilshed.')
+    client.on('connect', function() {
+      self.showSnackBar('Broker connection estabilshed.')
+    })
+    client.on('error', function() {
+      self.showSnackBar('Cannot connect to the broker server.')
+    })
+    client.on('offline', function() {
+      self.showSnackBar('Cannot connect to the broker server.')
+    })
   }
 
   // ======================================================================= //
@@ -245,18 +255,21 @@ export class MqttClientComponent implements OnInit {
   // ======================================================================= //
 
   subscribeTopic() {
-
     const self = this
-    this.showSnackBar(`Subscribed to topic ${this.subscribeTo.topics}.`)
-    client.subscribe(this.subscribeTo.topics)
-    .on('message', function (topic, message) {
-      const mess: Messages = new Messages(message, topic.toString())
-      self.messages = [...self.messages, mess]
-      self.cd.detectChanges()
-    })
-    .on('connect', (packet) => {
-      console.log('connected!', JSON.stringify(packet))
-    })
+    if ( client.connected ) {
+      self.showSnackBar(`Subscribed to topic ${this.subscribeTo.topics}.`)
+      client.subscribe(self.subscribeTo.topics)
+      .on('message', function (topic, message) {
+        const mess: Messages = new Messages(message, topic.toString())
+        self.messages = [...self.messages, mess]
+        self.cd.detectChanges()
+      })
+      .on('connect', (packet) => {
+        console.log('connected!', JSON.stringify(packet))
+      })
+    } else {
+      self.showSnackBar('You are not connected to a broker server')
+    }
   }
 
   // ======================================================================= //
@@ -265,10 +278,16 @@ export class MqttClientComponent implements OnInit {
   // ======================================================================= //
 
   unsubscribeTopic() {
-    this.clearBuffer()
-    client.unsubscribe(this.subscribeTo.topics)
-    console.log('Succesfully unsubscribed')
-    this.showSnackBar(`Unsubscribed from topic ${this.subscribeTo.topics} succesfully.`)
+    const self = this
+    if ( client.connected ) {
+      self.clearBuffer()
+      client.unsubscribe(self.subscribeTo.topics)
+      console.log('Succesfully unsubscribed')
+      self.showSnackBar(`Unsubscribed from topic ${self.subscribeTo.topics} succesfully.`)
+    } else {
+      self.showSnackBar('You are not subscribed to a topic.')
+    }
+
   }
 
   // ======================================================================= //
@@ -277,9 +296,14 @@ export class MqttClientComponent implements OnInit {
   // ======================================================================= //
 
   clearBuffer() {
-    this.messages = new Array()
-    this.cd.detectChanges()
-    this.showSnackBar('Message buffer cleared.')
+    const self = this
+    if ( client.connected ) {
+      self.messages = new Array()
+      self.cd.detectChanges()
+      self.showSnackBar('Message buffer cleared.')
+    } else {
+      self.showSnackBar('You are not connected to a broker server')
+    }
   }
 
   // ======================================================================= //
@@ -300,12 +324,22 @@ export class MqttClientComponent implements OnInit {
   // ======================================================================= //
 
   toHex() {
-    let result = ''
-    for (let i = 0; i < this.messages[this.currentIndex].message.toString().length; i++) {
-      result  += '000' + this.messages[ this.currentIndex].message[i].toString(16).slice(-4) + ' '
+
+    const self = this
+    if ( self.messages[self.currentIndex] !== undefined ) {
+      if ( self.messages[self.currentIndex].message.toString() ) {
+        let result = ''
+        for (let i = 0; i < self.messages[self.currentIndex].message.toString().length; i++) {
+          result  += '000' + self.messages[ self.currentIndex].message[i].toString(16).slice(-4) + ' '
+        }
+        self.focussedMessage.message = result.toUpperCase()
+        self.showSnackBar('Message converted to HEX.')
+      } else {
+        self.showSnackBar('Select a message before.')
+      }
+    } else {
+      self.showSnackBar('Select a message before.')
     }
-    this.focussedMessage.message = result.toUpperCase()
-    this.showSnackBar('Message converted to HEX.')
   }
 
   // ======================================================================= //
@@ -328,8 +362,17 @@ export class MqttClientComponent implements OnInit {
   // ======================================================================= //
 
   toStrings() {
-    this.focussedMessage.message = this.messages[this.currentIndex].message.toString()
-    this.showSnackBar('Message converted to STRING.')
+    const self = this
+    if ( self.messages[self.currentIndex] !== undefined ) {
+      if ( self.messages[self.currentIndex].message.toString() ) {
+        self.focussedMessage.message = self.messages[self.currentIndex].message.toString()
+        self.showSnackBar('Message converted to STRING.')
+      } else {
+        self.showSnackBar('Select a message before.')
+      }
+    } else {
+      self.showSnackBar('Select a message before.')
+    }
   }
 
   // ======================================================================= //
@@ -339,30 +382,38 @@ export class MqttClientComponent implements OnInit {
   toJson() {
     const self = this
     const pbRoot = new Root()
-    pbRoot.resolvePath = (origin: string, target: string) => {
-      const result = self.proto.protobufPath + '/' + target
-      console.log('Result: ', result)
-      return result
-    }
-
-    pbRoot.load(this.proto.protobufFile, { keepCase: true }, function(err, root) {
-      if (err) {
-        self.showSnackBar('Failed to convert message to JSON.')
-        console.log(err)
-        throw err
-      } else {
-        const myMessage = root.lookupType(self.proto.protobufPackage + '.' + self.proto.protobufMessage)
-        const array: Uint8Array = self.messages[self.currentIndex].message.slice()
-        console.log('Array', array.join(', '))
-        const error = myMessage.verify(myMessage.decode(array))
-        if (error) {
-          self.showSnackBar('Cannot convert this message.')
-        } else {
-          self.focussedMessage.message = JSON.stringify(myMessage.decode(array), null, '\t')
-          self.showSnackBar('Message converted to JSON.')
+    if ( self.messages[self.currentIndex] !== undefined ) {
+      if ( self.messages[self.currentIndex].message.toString() ) {
+        pbRoot.resolvePath = (origin: string, target: string) => {
+          const result = self.proto.protobufPath + '/' + target
+          console.log('Result: ', result)
+          return result
         }
+
+        pbRoot.load(this.proto.protobufFile, { keepCase: true }, function(err, root) {
+          if (err) {
+            self.showSnackBar('Failed to convert message to JSON.')
+            console.log(err)
+            throw err
+          } else {
+            const myMessage = root.lookupType(self.proto.protobufPackage + '.' + self.proto.protobufMessage)
+            const array: Uint8Array = self.messages[self.currentIndex].message.slice()
+            console.log('Array', array.join(', '))
+            const error = myMessage.verify(myMessage.decode(array))
+            if (error) {
+              self.showSnackBar('Cannot convert this message.')
+            } else {
+              self.focussedMessage.message = JSON.stringify(myMessage.decode(array), null, '\t')
+              self.showSnackBar('Message converted to JSON.')
+            }
+          }
+        })
+      } else {
+        self.showSnackBar('Select a message before.')
       }
-    })
+    } else {
+      self.showSnackBar('Select a message before.')
+    }
   }
 
   // ======================================================================= //
