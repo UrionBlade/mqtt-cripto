@@ -18,6 +18,7 @@ import { ElectronService } from './providers/electron.service'
 import { WebviewDirective } from './directives/webview.directive'
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar'
+import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 import {
     MatButtonModule,
     MatAutocompleteModule,
@@ -121,6 +122,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     FormsModule,
     materialModules,
+    InfiniteScrollModule,
     formsModule,
     HttpClientModule,
     AppRoutingModule,

@@ -386,7 +386,6 @@ export class MqttClientComponent implements OnInit {
       if ( self.messages[self.currentIndex].message.toString() ) {
         pbRoot.resolvePath = (origin: string, target: string) => {
           const result = self.proto.protobufPath + '/' + target
-          console.log('Result: ', result)
           return result
         }
 
@@ -398,7 +397,6 @@ export class MqttClientComponent implements OnInit {
           } else {
             const myMessage = root.lookupType(self.proto.protobufPackage + '.' + self.proto.protobufMessage)
             const array: Uint8Array = self.messages[self.currentIndex].message.slice()
-            console.log('Array', array.join(', '))
             const error = myMessage.verify(myMessage.decode(array))
             if (error) {
               self.showSnackBar('Cannot convert this message.')
