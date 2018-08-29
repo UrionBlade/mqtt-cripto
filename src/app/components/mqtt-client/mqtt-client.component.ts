@@ -14,11 +14,13 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { take } from 'rxjs/operators'
 import {DomSanitizer} from '@angular/platform-browser'
 import {MatIconRegistry} from '@angular/material'
+import { basename } from 'path';
 
 const storage = require('electron-storage')
 const mqtt = require('mqtt')
 const path = require('path')
 const dataPath = 'data/'
+const {dialog} = require('electron').remote
 
 let client
 
@@ -55,7 +57,7 @@ export class MqttClientComponent implements OnInit {
     private cd: ChangeDetectorRef,
     public snackBar: MatSnackBar,
     private ngZone: NgZone,
-    private dialog: MatDialog) { }
+    private matDialog: MatDialog) { }
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   // ======================================================================= //
@@ -64,7 +66,7 @@ export class MqttClientComponent implements OnInit {
   // ======================================================================= //
 
   openDialog(file: string) {
-    const dialogRef = this.dialog.open(
+    const dialogRef = this.matDialog.open(
         DialogComponent, {
             width: '30%',
             minHeight: '100px'
@@ -373,6 +375,14 @@ export class MqttClientComponent implements OnInit {
     } else {
       self.showSnackBar('Select a message before.')
     }
+  }
+
+  openDirectory() {
+    this.proto.protobufPath = dialog.showOpenDialog({properties: ['openFile', 'openDirectory']})[0]
+  }
+
+  openFile() {
+    this.proto.protobufFile = basename(dialog.showOpenDialog({properties: ['openFile']})[0])
   }
 
   // ======================================================================= //

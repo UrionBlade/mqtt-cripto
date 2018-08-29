@@ -108,11 +108,13 @@
     </mat-card-subtitle>
 
     <form [formGroup]="protoForm">
+      <button mat-button class="selection" (click)="openDirectory()"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-edit"></mat-icon></button>
       <mat-form-field class="form-field">
         <input matInput placeholder="Protobuf Path" [(ngModel)]="proto.protobufPath" formControlName="protobufPath"/>
         <mat-hint>Insert here the path where proto files are</mat-hint> 
       </mat-form-field>
 
+      <button mat-button class="selection" (click)="openFile()"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-edit"></mat-icon></button>
       <mat-form-field class="form-field">
         <input matInput placeholder="Protobuf File Name" [(ngModel)]="proto.protobufFile" formControlName="protobufFile"/>
         <mat-hint>Insert here the proto file name</mat-hint> 
