@@ -156,6 +156,7 @@
       Insert below, the topic, the message and the proto file to encode your message
     </mat-card-subtitle>
     <form [formGroup]="publishForm">
+      <button mat-button class="selection"  matTooltip="Select file" (click)="openFile()"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-edit"></mat-icon></button>
       <mat-form-field class="form-field">
         <input matInput placeholder="Protobuf Path" [(ngModel)]="proto.protobufPath" formControlName="publishProtoPath"/>
         <mat-hint>Insert here the path where proto files are</mat-hint> 
