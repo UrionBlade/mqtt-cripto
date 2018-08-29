@@ -382,7 +382,13 @@ export class MqttClientComponent implements OnInit {
   }
 
   openFile() {
-    this.proto.protobufFile = basename(dialog.showOpenDialog({properties: ['openFile']})[0])
+
+    const pathToFile = dialog.showOpenDialog({properties: ['openFile']})[0]
+
+    this.proto.protobufFile = basename(pathToFile)
+
+    this.proto.protobufPath = pathToFile.replace(basename(pathToFile), '')
+
   }
 
   // ======================================================================= //
