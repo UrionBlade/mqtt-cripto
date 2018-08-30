@@ -47,19 +47,6 @@ You can use Mqtt Cripto to subscribe or publish on your MQTT broker.
 
 <hr>
 
-## Download
-
-### Linux
-
-http://www.mediafire.com/file/7p2psgh7pbp5n2d/Mqtt_Critpo_Linux_Version
-
-### Windows
-
-http://www.mediafire.com/file/rdhe0cyaz6or5xv/Mqtt_Cripto_Windows_Version.exe/file
-
-<hr>
-
-
 ## Broker Configuration
 
 ![MQTT Configuration](./src/assets/images/mqtt-configuration.jpg)

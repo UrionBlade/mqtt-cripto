@@ -21,7 +21,9 @@ function createWindow() {
     webPreferences: {
       webSecurity: false,
       allowRunningInsecureContent: true
-    }
+    },
+    icon: 'src/favicon.256x256.png'
+
   });
 
   if (serve) {

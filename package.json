@@ -1,6 +1,6 @@
 {
   "name": "mqtt-cripto",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Mqtt client",
   "homepage": "https://github.com/UrionBlade/mqtt-cripto.git",
   "author": {
@@ -48,6 +48,7 @@
     "hammerjs": "^2.0.8",
     "jasmine": "^3.1.0",
     "mqtt": "^2.18.3",
+    "ngx-infinite-scroll": "^6.0.1",
     "ngx-perfect-scrollbar": "^6.2.1",
     "protobufjs": "^6.8.8",
     "shebang-loader": "0.0.1",
@@ -73,7 +74,7 @@
     "@types/node": "8.9.4",
     "codelyzer": "4.2.1",
     "core-js": "2.5.6",
-    "electron": "2.0.3",
+    "electron": "^2.0.8",
     "electron-builder": "20.14.7",
     "electron-reload": "1.2.2",
     "jasmine-core": "3.1.0",

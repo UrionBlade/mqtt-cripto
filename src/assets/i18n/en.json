@@ -69,10 +69,6 @@
         "WRITE_HERE": "Write here your message",
         "MESSAGE_TO_PUBLISH": "Insert Message to publish. Remember, if you are using an enum, insert the index of the value."
     },
-    "POSTERS": {
-        "PAGE_NAME": "HTTP",
-        "HTTP_CLIENT": "PostEr"
-    },
     "CONFIRM_DIALOG": {
         "MESSAGE": "Are you sure you want delete this configuration?",
         "YES": "Yes",

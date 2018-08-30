@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { MqttClientComponent } from './components/mqtt-client/mqtt-client.component';
-import { PostersComponent } from './components/posters/posters.component';
+import { NgModule } from '@angular/core'
+import { Routes, RouterModule } from '@angular/router'
+import { MqttClientComponent } from './components/mqtt-client/mqtt-client.component'
 
 const routes: Routes = [
     {
@@ -12,11 +11,7 @@ const routes: Routes = [
     {
         path: 'mqttClient',
         component: MqttClientComponent
-    },
-    {
-        path: 'httpClient',
-        component: PostersComponent
-    },
+    }
 ]
 
 @NgModule({

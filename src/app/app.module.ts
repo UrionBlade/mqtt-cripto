@@ -19,6 +19,7 @@ import { ElectronService } from './providers/electron.service'
 import { WebviewDirective } from './directives/webview.directive'
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar'
+import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 import {
     MatButtonModule,
     MatAutocompleteModule,
@@ -57,8 +58,10 @@ import {MatDialogModule} from '@angular/material/dialog'
 import { AppComponent } from './app.component'
 import { MqttClientComponent, DialogComponent } from './components/mqtt-client/mqtt-client.component'
 import { HeaderComponent } from './components/header/header.component'
-import { PostersComponent } from './components/posters/posters.component'
 import { HttpService } from './providers/http.service';
+
+
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -115,17 +118,18 @@ export function HttpLoaderFactory(http: HttpClient) {
     HeaderComponent,
     MqttClientComponent,
     WebviewDirective,
-    DialogComponent,
-    PostersComponent
+    DialogComponent
   ],
   entryComponents: [DialogComponent],
   imports: [
     BrowserAnimationsModule,
     MatDialogModule,
     BrowserModule,
+    ScrollToModule.forRoot(),
     FormsModule,
     HttpModule,
     materialModules,
+    InfiniteScrollModule,
     formsModule,
     HttpClientModule,
     AppRoutingModule,
