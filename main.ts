@@ -17,7 +17,8 @@ function createWindow() {
     y: 0,
     width: size.width,
     height: size.height,
-    title: 'Mqtt Cripto'
+    title: 'Mqtt Cripto',
+    icon: 'src/favicon.256x256.png'
   });
 
   if (serve) {

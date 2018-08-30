@@ -38,7 +38,7 @@ export class MqttClientComponent implements OnInit {
   protoForm: FormGroup
   publishForm: FormGroup
 
-  broker: BrokerConfiguration = new BrokerConfiguration('', 1883, 'mqtt', 'Mqtt Client ID', '', '', '1')
+  broker: BrokerConfiguration = new BrokerConfiguration('', 1883, 'mqtt', 'MQTT_Cripto_ID', '', '', '1')
   subscribeTo: Topic = new Topic(Array())
   messages: Array<Messages> = new Array()
   protocol = protocols
@@ -398,36 +398,38 @@ export class MqttClientComponent implements OnInit {
   toJson() {
     const self = this
     const pbRoot = new Root()
-    if ( self.messages[self.currentIndex] !== undefined ) {
-      if ( self.messages[self.currentIndex].message.toString() ) {
-        pbRoot.resolvePath = (origin: string, target: string) => {
-          const result = self.proto.protobufPath + '/' + target
-          return result
-        }
+    const isMessageSelected =
+      self.messages[self.currentIndex] !== undefined &&
+      self.messages[self.currentIndex].message.toString()
 
-        pbRoot.load(this.proto.protobufFile, { keepCase: true }, function(err, root) {
-          if (err) {
-            self.showSnackBar('Failed to convert message to JSON.')
-            console.log(err)
-            throw err
-          } else {
-            const myMessage = root.lookupType(self.proto.protobufPackage + '.' + self.proto.protobufMessage)
-            const array: Uint8Array = self.messages[self.currentIndex].message.slice()
-            const error = myMessage.verify(myMessage.decode(array))
-            if (error) {
-              self.showSnackBar('Cannot convert this message.')
-            } else {
-              self.focussedMessage.message = JSON.stringify(myMessage.decode(array), null, '\t')
-              self.showSnackBar('Message converted to JSON.')
-            }
-          }
-        })
-      } else {
-        self.showSnackBar('Select a message before.')
-      }
-    } else {
+
+    if (!isMessageSelected) {
       self.showSnackBar('Select a message before.')
+
+      return
     }
+    pbRoot.resolvePath = (origin: string, target: string) => {
+      const result = self.proto.protobufPath + '/' + target
+      return result
+    }
+
+    pbRoot.load(this.proto.protobufFile, { keepCase: true }, function(err, root) {
+      if (err) {
+        self.showSnackBar('Failed to convert message to JSON.')
+        console.log(err)
+        throw err
+      } else {
+        const myMessage = root.lookupType(self.proto.protobufPackage + '.' + self.proto.protobufMessage)
+        const array: Uint8Array = self.messages[self.currentIndex].message.slice()
+        const error = myMessage.verify(myMessage.decode(array))
+        if (error) {
+          self.showSnackBar('Cannot convert this message.')
+        } else {
+          self.focussedMessage.message = JSON.stringify(myMessage.decode(array), null, '\t')
+          self.showSnackBar('Message converted to JSON.')
+        }
+      }
+    })
   }
 
   // ======================================================================= //

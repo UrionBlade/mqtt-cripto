@@ -83,10 +83,9 @@
             <mat-list infiniteScroll
                 [infiniteScrollDistance]="2"
                 [infiniteScrollThrottle]="50"
-                [infiniteScrollContainer]="selector"
                 [fromRoot]="true">
               <mat-list-item  *ngFor="let message of messages; let in = index">
-              <span  class="buttons"> <button class="btn-cripto" mat-button class="topic" (click)="openMessage(in)"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-envelope"></mat-icon>{{ in }} :   {{ message.topic }} </button></span>
+              <span  class="buttons"> <button class="btn-cripto" [ngx-scroll-to]="'opened'"mat-button class="topic" (click)="openMessage(in)"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-envelope"></mat-icon>{{ in }} :   {{ message.topic }} </button></span>
               </mat-list-item>
             </mat-list>
           </perfect-scrollbar>
@@ -147,7 +146,7 @@
   </mat-card-actions>
 </mat-card>
 
-<mat-card class="card">
+<mat-card class="card" id="opened">
   <mat-card-title>
     Mqtt Publisher
   </mat-card-title>

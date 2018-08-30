@@ -58,6 +58,9 @@ import { AppComponent } from './app.component'
 import { MqttClientComponent, DialogComponent } from './components/mqtt-client/mqtt-client.component'
 import { HeaderComponent } from './components/header/header.component'
 
+
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 }
@@ -120,6 +123,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserAnimationsModule,
     MatDialogModule,
     BrowserModule,
+    ScrollToModule.forRoot(),
     FormsModule,
     materialModules,
     InfiniteScrollModule,
