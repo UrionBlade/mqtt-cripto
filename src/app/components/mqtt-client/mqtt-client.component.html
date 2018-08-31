@@ -73,25 +73,22 @@
     </span>
     <mat-card-actions>
      <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Save topic" color="primary" (click)="saveTopic()"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-save"></mat-icon>Save</button></span>
-     <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Subscribe to the selected topic" color="primary" (click)="subscribeTopic()" (click)="drawer.open()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-sign-in-alt"></mat-icon>Subscribe</button></span>
+     <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Subscribe to the selected topic" color="primary" (click)="subscribeTopic()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-sign-in-alt"></mat-icon>Subscribe</button></span>
      <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Clear proto buffer" color="primary" (click)="clearBuffer()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-eraser"></mat-icon>Clear</button></span>
      <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Unsubscribe from selected topic" color="warn" (click)="unsubscribeTopic()" (click)="drawer.close()"><mat-icon class="icon-text" fontSet="fas" fontIcon="fa-sign-out-alt"></mat-icon>Unsubscribe</button></span>
      <span  class="buttons"> <button class="btn-cripto" mat-raised-button matTooltip="Delete saved topic" color="warn" (click)="openDialog(topicFile)"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-trash-alt"></mat-icon>Delete</button></span>
-      <mat-drawer-container class="example-container">
-        <mat-drawer class="drawer" #drawer>
-          <perfect-scrollbar>      
-            <mat-list infiniteScroll
-                [infiniteScrollDistance]="2"
-                [infiniteScrollThrottle]="50"
-                [fromRoot]="true">
-              <mat-list-item  *ngFor="let message of messages; let in = index">
-              <span  class="buttons"> <button class="btn-cripto" [ngx-scroll-to]="'opened'"mat-button class="topic" (click)="openMessage(in)"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-envelope"></mat-icon>{{ in }} :   {{ message.topic }} </button></span>
-              </mat-list-item>
-            </mat-list>
-          </perfect-scrollbar>
-        </mat-drawer>
-      </mat-drawer-container>
-
+      <div class="topic-list" id="topic-list">
+        <perfect-scrollbar>      
+          <mat-list infiniteScroll
+              [infiniteScrollDistance]="2"
+              [infiniteScrollThrottle]="50"
+              [fromRoot]="true">
+            <mat-list-item  *ngFor="let message of messages; let in = index">
+            <span  class="buttons"> <button class="btn-cripto" [ngx-scroll-to]="'opened'"mat-button class="topic" (click)="openMessage(in)"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-envelope"></mat-icon>{{ in }} :   {{ message.topic }} </button></span>
+            </mat-list-item>
+          </mat-list>
+        </perfect-scrollbar>
+      </div>
     </mat-card-actions>
   </mat-card-content>
   
