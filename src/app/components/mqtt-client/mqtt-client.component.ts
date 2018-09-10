@@ -265,8 +265,8 @@ export class MqttClientComponent implements OnInit {
         const mess: Messages = new Messages(message, topic.toString())
         self.messages = [...self.messages, mess]
         self.cd.detectChanges()
-        const objDiv = document.getElementById('topic-list');
-        objDiv.scrollTop = objDiv.scrollHeight;
+        const objDiv = document.getElementById('topic-list')
+        objDiv.scrollTop = objDiv.scrollHeight
       })
       .on('connect', (packet) => {
         console.log('connected!', JSON.stringify(packet))
