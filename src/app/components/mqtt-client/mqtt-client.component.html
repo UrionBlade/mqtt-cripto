@@ -137,21 +137,16 @@
           {{ 'PAGES.BUTTONS.DELETE' | translate }}
         </button>
       </span>
-      <mat-drawer-container class="example-container">
-        <mat-drawer class="drawer" #drawer>
-          <perfect-scrollbar>      
-            <mat-list infiniteScroll
-                [infiniteScrollDistance]="2"
-                [infiniteScrollThrottle]="50"
-                [fromRoot]="true">
-              <mat-list-item  *ngFor="let message of messages; let in = index">
-              <span  class="buttons"> <button class="btn-cripto" [ngx-scroll-to]="'opened'"mat-button class="topic" (click)="openMessage(in)"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-envelope"></mat-icon>{{ in }} :   {{ message.topic }} </button></span>
-              </mat-list-item>
-            </mat-list>
-          </perfect-scrollbar>
-        </mat-drawer>
-      </mat-drawer-container>
-
+        <div class="topic-list" id="topic-list">          
+          <mat-list infiniteScroll
+              [infiniteScrollDistance]="2"
+              [infiniteScrollThrottle]="50"
+              [fromRoot]="true">
+            <mat-list-item  *ngFor="let message of messages; let in = index">
+            <span  class="buttons"> <button class="btn-cripto" [ngx-scroll-to]="'opened'"mat-button class="topic" (click)="openMessage(in)"><mat-icon class="icon-text" fontSet="far" fontIcon="fa-envelope"></mat-icon>{{ in }} :   {{ message.topic }} </button></span>
+            </mat-list-item>
+          </mat-list>
+        </div>
     </mat-card-actions>
   </mat-card-content>
   

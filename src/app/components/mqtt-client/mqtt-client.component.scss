@@ -98,3 +98,13 @@ pre {
     max-width: 20px !important;
     min-width: 20px !important;
 }
+
+.topic-list {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    min-height: 400px;
+    max-height: 400px;
+    background-color: #212121;
+    overflow: auto;
+  }
