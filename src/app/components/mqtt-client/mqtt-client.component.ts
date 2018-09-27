@@ -60,10 +60,11 @@ export class MqttClientComponent implements OnInit {
     private matDialog: MatDialog) { }
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
-  // ======================================================================= //
-  //    This method will open the material dialog in order to confirm to     //
-  //                        delete the configuration.                        //
-  // ======================================================================= //
+  /**
+   * This method will open the material dialog in order to confirm
+   * to delete the configuration.
+   * @param file -> the name of the file you want delete.
+   */
 
   openDialog(file: string) {
     const dialogRef = this.matDialog.open(
@@ -96,9 +97,9 @@ export class MqttClientComponent implements OnInit {
     });
   }
 
-  // ======================================================================= //
-  //          This method trigger auto resizes of the text area.             //
-  // ======================================================================= //
+  /**
+   * This method trigger auto resizes of the text area.
+   */
 
   triggerResize() {
     // Wait for changes to be applied, then trigger textarea resize.
@@ -106,9 +107,13 @@ export class MqttClientComponent implements OnInit {
         .subscribe(() => this.autosize.resizeToFitContent(true));
   }
 
-  // ======================================================================= //
-  //              Show snackbar on the bottom of the page.                   //
-  // ======================================================================= //
+  /**
+   * Show snackbar on the bottom of the page.
+   * @param {string} message -> the string to be shown into the snackbar
+   * @param {string} [action] -> if present, a button with the label action
+   * is shown.
+   * @memberof MqttClientComponent
+   */
 
   showSnackBar(message: string, action?: string)  {
     const config = new MatSnackBarConfig()
@@ -118,9 +123,10 @@ export class MqttClientComponent implements OnInit {
     this.snackBar.open(message, action, config)
   }
 
-  // ======================================================================= //
-  //               Save broker configuration into JSON file.                 //
-  // ======================================================================= //
+  /**
+   * Save broker configuration into JSON file.
+   * @memberof MqttClientComponent
+   */
 
   saveBrokerConfig() {
     console.log(this.broker)
@@ -141,9 +147,10 @@ export class MqttClientComponent implements OnInit {
       })
   }
 
-  // ======================================================================= //
-  //          Delete JSON file that contains broker configuration.           //
-  // ======================================================================= //
+  /**
+   * Delete JSON file that contains broker configuration.
+   * @memberof MqttClientComponent
+   */
 
   deleteBrokerConfig() {
     storage.isPathExists(dataPath + this.mqttConfig)
@@ -166,9 +173,10 @@ export class MqttClientComponent implements OnInit {
       })
   }
 
-  // ======================================================================= //
-  //            Connect to the broker using the selected protocol.           //
-  // ======================================================================= //
+  /**
+   * Connect to the broker using the selected protocol.
+   * @memberof MqttClientComponent
+   */
 
   connectBroker() {
 
@@ -197,9 +205,10 @@ export class MqttClientComponent implements OnInit {
     })
   }
 
-  // ======================================================================= //
-  //        Disconnect to the broker when the user clicks on a button.       //
-  // ======================================================================= //
+  /**
+   * Disconnect to the broker when the user clicks on a button.
+   * @memberof MqttClientComponent
+   */
 
   disconnectBroker() {
     client.end()
@@ -207,9 +216,10 @@ export class MqttClientComponent implements OnInit {
     this.showSnackBar('Disconnected from broker')
   }
 
-  // ======================================================================= //
-  //     Save topic into JSON file when the user clicks the'Save' button.    //
-  // ======================================================================= //
+  /**
+   * Save topic into JSON file when the user clicks the'Save' button.
+   * @memberof MqttClientComponent
+   */
 
   saveTopic() {
     storage.remove(dataPath + this.topicFile).then( err => {
@@ -229,11 +239,12 @@ export class MqttClientComponent implements OnInit {
       })
   }
 
-  // ======================================================================= //
-  //       Delete topic into JSON file when user click 'Delete' button.      //
-  // ======================================================================= //
+  /**
+   * Delete topic into JSON file when user click 'Delete' button.
+   * @memberof MqttClientComponent
+   */
 
-  deleteTopic() {
+   deleteTopic() {
     storage.isPathExists(dataPath + this.topicFile)
     .then(itDoes => {
       if (itDoes) {
@@ -252,9 +263,10 @@ export class MqttClientComponent implements OnInit {
       })
   }
 
-  // ======================================================================= //
-  //    Subscribe to a topic when the user clicks the 'Subscribe' button.    //
-  // ======================================================================= //
+  /**
+   * Subscribe to a topic when the user clicks the 'Subscribe' button.
+   * @memberof MqttClientComponent
+   */
 
   subscribeTopic() {
     const self = this
@@ -276,10 +288,11 @@ export class MqttClientComponent implements OnInit {
     }
   }
 
-  // ======================================================================= //
-  //       Unsubscribe from a topic. This operation will clear message       //
-  //                               buffer too.                               //
-  // ======================================================================= //
+  /**
+   * Unsubscribe from a topic. This operation will clear message
+   * buffer too.
+   * @memberof MqttClientComponent
+   */
 
   unsubscribeTopic() {
     const self = this
@@ -294,10 +307,11 @@ export class MqttClientComponent implements OnInit {
 
   }
 
-  // ======================================================================= //
-  //      Clear message buffer when the user clicks on 'Clear' button.       //
-  //             Once you clear buffer, you lose all messages                //
-  // ======================================================================= //
+  /**
+   * Clear message buffer when the user clicks on 'Clear' button.
+   * Once you clear buffer, you lose all messages.
+   * @memberof MqttClientComponent
+   */
 
   clearBuffer() {
     const self = this
@@ -310,10 +324,12 @@ export class MqttClientComponent implements OnInit {
     }
   }
 
-  // ======================================================================= //
-  //         When the user clicks on the topic into the topic list,          //
-  //               on the message card, the message appears.                 //
-  // ======================================================================= //
+  /**
+   * When the user clicks on the topic into the topic list,
+   * on the message card, the message appears.
+   * @param {number} index -> the message index into the message array.
+   * @memberof MqttClientComponent
+   */
 
   openMessage( index: number) {
     this.currentIndex = index
@@ -323,9 +339,10 @@ export class MqttClientComponent implements OnInit {
     this.focussedMessage.topic = this.messages[index].topic
   }
 
-  // ======================================================================= //
-  //                  Convert the proto message to hex                       //
-  // ======================================================================= //
+  /**
+   * Convert the proto message to hex
+   * @memberof MqttClientComponent
+   */
 
   toHex() {
 
@@ -346,9 +363,12 @@ export class MqttClientComponent implements OnInit {
     }
   }
 
-  // ======================================================================= //
-  //                       Convert hex to a string                           //
-  // ======================================================================= //
+  /**
+   * Convert hex to a string
+   * @param {*} hex the hex to convert to a string
+   * @returns the string converted from the hex value
+   * @memberof MqttClientComponent
+   */
 
   fromHexToString(hex) {
 
@@ -361,9 +381,10 @@ export class MqttClientComponent implements OnInit {
     return result
   }
 
-  // ======================================================================= //
-  //               Convert the proto message to a string                     //
-  // ======================================================================= //
+  /**
+   * Convert the proto message to a string
+   * @memberof MqttClientComponent
+   */
 
   toStrings() {
     const self = this
@@ -379,9 +400,10 @@ export class MqttClientComponent implements OnInit {
     }
   }
 
-  openDirectory() {
-    this.proto.protobufPath = dialog.showOpenDialog({properties: ['openFile', 'openDirectory']})[0]
-  }
+  /**
+   * A function that allow you to choose a file and its directory.
+   * @memberof MqttClientComponent
+   */
 
   openFile() {
 
@@ -393,9 +415,10 @@ export class MqttClientComponent implements OnInit {
 
   }
 
-  // ======================================================================= //
-  //                 Convert the proto message to JSON.                      //
-  // ======================================================================= //
+  /**
+   * Convert the proto message to JSON.
+   * @memberof MqttClientComponent
+   */
 
   toJson() {
     const self = this
@@ -434,9 +457,10 @@ export class MqttClientComponent implements OnInit {
     })
   }
 
-  // ======================================================================= //
-  //                    Save proto info into a JSON file.                    //
-  // ======================================================================= //
+  /**
+   * Save proto info into a JSON file.
+   * @memberof MqttClientComponent
+   */
 
   saveProto() {
     storage.remove(dataPath + this.protoFile).then( err => {
@@ -456,9 +480,10 @@ export class MqttClientComponent implements OnInit {
       })
   }
 
-  // ======================================================================= //
-  //                  Delete proto info into a JSON file.                    //
-  // ======================================================================= //
+  /**
+   * Delete proto info into a JSON file.
+   * @memberof MqttClientComponent
+   */
 
   deleteProto() {
     storage.isPathExists(dataPath + this.protoFile)
@@ -479,18 +504,20 @@ export class MqttClientComponent implements OnInit {
       })
   }
 
-  // ======================================================================= //
-  //       When the user clicks the button 'Remove' on message Card,         //
-  //                        the message disappears.                          //
-  // ======================================================================= //
+  /**
+   * When the user clicks the button 'Remove' on message Card,
+   * the message disappears.
+   * @memberof MqttClientComponent
+   */
 
   removeMessage() {
     this.focussedMessage = new ShowedMessage('', '')
   }
 
-  // ======================================================================= //
-  //                 Publish a message as a protobuf message.                //
-  // ======================================================================= //
+  /**
+   * Publish a message as a protobuf message.
+   * @memberof MqttClientComponent
+   */
 
   publish() {
     const self = this
@@ -516,27 +543,31 @@ export class MqttClientComponent implements OnInit {
     })
   }
 
-  // ======================================================================= //
-  //                  Publish a message as a hex message.                    //
-  // ======================================================================= //
+  /**
+   * Publish a message as a hex message.
+   * @memberof MqttClientComponent
+   */
 
   publishHex() {
     client.publish(this.publishingTopic, this.fromHexToString(this.publishingMessage), this.publishingQos ? this.publishingQos : '0')
     this.showSnackBar('Message published on MQTT.')
   }
 
-  // ======================================================================= //
-  //                 Publish a message as a string message.                  //
-  // ======================================================================= //
+  /**
+   * Publish a message as a string message.
+   * @memberof MqttClientComponent
+   */
 
   publishString() {
     client.publish(this.publishingTopic, this.publishingMessage, this.publishingQos ? this.publishingQos : '0')
     this.showSnackBar('Message published on MQTT.')
   }
 
-  // ======================================================================= //
-  //          Copy the message into a <pre></pre> tag to the clipboard       //
-  // ======================================================================= //
+  /**
+   * Copy the message into a <pre></pre> tag to the clipboard.
+   * @param {string} text the message need to be copied
+   * @memberof MqttClientComponent
+   */
 
   copyMessage(text: string) {
     const textArea = document.createElement('textarea')
@@ -565,9 +596,10 @@ export class MqttClientComponent implements OnInit {
     document.body.removeChild(textArea);
   }
 
-  // ======================================================================= //
-  //                  Clear the content of the text area.                    //
-  // ======================================================================= //
+  /**
+   * Clear the content of the text area.
+   * @memberof MqttClientComponent
+   */
 
   cleanTextArea() {
     const elem = document.getElementById('publish-text-area') as HTMLInputElement;
@@ -672,6 +704,10 @@ export class MqttClientComponent implements OnInit {
 export class DialogComponent {
   constructor(public dialogRef: MatDialogRef<DialogComponent>) { }
 
+  /**
+   * Close dialog when user clicks out of it
+   * @memberof DialogComponent
+   */
   onNoClick(): void {
       this.dialogRef.close();
     }
