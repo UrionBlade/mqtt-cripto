@@ -57,7 +57,6 @@ import {
 import {MatDialogModule} from '@angular/material/dialog'
 import { AppComponent } from './app.component'
 import { MqttClientComponent, DialogComponent } from './components/mqtt-client/mqtt-client.component'
-import { HeaderComponent } from './components/header/header.component'
 import { HttpService } from './providers/http.service';
 
 
@@ -115,7 +114,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
     MqttClientComponent,
     WebviewDirective,
     DialogComponent
