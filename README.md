@@ -1,3 +1,6 @@
+This repository is deprecated. Use https://gitlab.com/Urion/mqtt-crypto
+
+
 [![Angular Logo](./logo-angular.jpg)](https://angular.io/) [![Electron Logo](./logo-electron.jpg)](https://electron.atom.io/)
 
 # MQTT Cripto
